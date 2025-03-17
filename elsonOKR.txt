@@ -1,0 +1,7 @@
+Schedule and Deliverable:
+	
+	trying/testing new mechanics ideas in the test scene - Wed by 11 pm (estimate: 2 hrs)
+	research Sound Detection in Unity docs - Fri by 11 pm (estimate: 6 hrs)
+	write and test sound detection code - Mon by 11 pm (estimate: 2 hrs)
+	find free game-environment-related sounds - Thur by 11 pm (estimate: 3 hrs)
+	incorporate the sounds with sound-generating scripts - Mon by 11 pm (estimate: 2 hrs)
