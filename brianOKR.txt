@@ -1,0 +1,8 @@
+Schedule and deliverable:
+
+	add new items and implement their interactions with environment - Tuesday (2 hours)
+	create prototype of menu hub and level selector - Wednesday (1 hours)
+	create new environment interactions and obstacles for levels - Monday (4 hours)
+	design and create first paranormal object model and animation - Friday (6 hours)
+	test monster AI and pathfinding in test scene - Saturday (4 hours)	
+	
