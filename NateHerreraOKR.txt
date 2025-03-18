@@ -1,0 +1,4 @@
+Health Bar UI Design - 3/18 - 3Hours
+Health Bar Implementation in Unity - 3/19 - 4 Hours
+Inventory UI Design - 3/25 - 3 Hours
+Inventory Implementation in Unity - 3/26 - 4 Hours
