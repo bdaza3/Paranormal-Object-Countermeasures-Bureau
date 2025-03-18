@@ -1,6 +1,8 @@
 # Paranormal-Object-Countermeasures-Bureau
 CS 426 Final Project Group Repo
 
+Members: Brian Daza, Elson Allmuca, Nathaniel Herrera
+
 
 Design link: https://docs.google.com/document/d/1HnHVIB9CBDQn_2MwPsO4bbKE3oP4CLHLwdDn5xrWmCA/edit?tab=t.0
 
