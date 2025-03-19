@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FirstPersonMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f; // Default movement speed (walking speed)
     public float runSpeed = 9f;  // Running speed (faster than walking)

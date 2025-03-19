@@ -1,53 +1,68 @@
 using UnityEngine;
-using UnityEngine.UI; // Make sure to include this if you're working with UI components like RawImage
+using UnityEngine.UI; 
 
 public class NoteAppear : MonoBehaviour
 {
-    [SerializeField]
-    private RawImage noteImage; // The RawImage UI component for the note
-    private bool isInRange = false; // Flag to check if the player is in range to interact
-    private bool isNoteVisible = false; // Flag to track if the note is currently visible
+    [SerializeField] private RawImage noteImage; 
+    private bool isInRange = false; 
+    private bool isNoteVisible = false; 
 
-    void OnTriggerEnter(Collider other)
+    private PlayerMovement playerMovement; 
+    private Rigidbody playerRigidbody;
+
+    private void Start()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            playerMovement = player.GetComponent<PlayerMovement>();
+            playerRigidbody = player.GetComponent<Rigidbody>();
+        }
+        
+        noteImage.enabled = false; // Ensure the note starts hidden
+    }
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isInRange = true; // Player is in range to interact with the note
+            isInRange = true;
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isInRange = false; // Player has left the range
+            isInRange = false;
         }
     }
 
-    void Update()
+    private void Update()
     {
-        // Check for input only when the player is in range
         if (isInRange && Input.GetKeyDown(KeyCode.E))
         {
-            ToggleNoteVisibility(); // Toggle the note's visibility when E is pressed
+            ToggleNoteVisibility();
         }
     }
 
-    // Function to toggle the visibility of the note
     private void ToggleNoteVisibility()
     {
-        if (isNoteVisible)
+        isNoteVisible = !isNoteVisible;
+        noteImage.enabled = isNoteVisible;
+
+        if (playerMovement != null)
         {
-            // Hide the note
-            noteImage.enabled = false;
-        }
-        else
-        {
-            // Show the note
-            noteImage.enabled = true;
+            playerMovement.enabled = !isNoteVisible; // Disable movement when note is visible
         }
 
-        // Toggle the visibility state
-        isNoteVisible = !isNoteVisible;
+        if (playerRigidbody != null)
+        {
+            playerRigidbody.isKinematic = isNoteVisible; // Freeze physics when note is visible
+        }
+        
+        Cursor.lockState = isNoteVisible ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = isNoteVisible;
     }
 }
+
