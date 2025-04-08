@@ -9,6 +9,7 @@ TagManager:
   - AxeItem
   - Board
   - DrillItem
+  - BigMonster
   layers:
   - Default
   - TransparentFX

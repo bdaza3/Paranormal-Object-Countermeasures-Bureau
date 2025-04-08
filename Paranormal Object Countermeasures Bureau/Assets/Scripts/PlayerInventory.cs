@@ -15,6 +15,9 @@ public class FlashlightInventory : MonoBehaviour
     public GameObject drill;
     public Light flashlightLight;
 
+    AudioClip flashlightSound;
+    AudioSource audioSource; 
+
     [Header("Player Settings")]
     public bool isFlashlightEquipped = false;
     public bool isAxeEquipped = false;
@@ -37,7 +40,6 @@ public class FlashlightInventory : MonoBehaviour
 
     private void Update()
     {
-        // Weapon Selection
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             EquipFlashlight();
@@ -51,13 +53,11 @@ public class FlashlightInventory : MonoBehaviour
             EquipPowerDrill();
         }
 
-        // Flashlight Toggle
         if (isFlashlightEquipped && Input.GetKeyDown(KeyCode.Mouse0))
         {
             ToggleFlashlightLight();
         }
 
-        // Axe Swing + Board Destruction
         if (isAxeEquipped && Input.GetKeyDown(KeyCode.Mouse0) && !isSwinging)
         {
             SwingAxe();
@@ -99,13 +99,14 @@ public class FlashlightInventory : MonoBehaviour
 
     private void ToggleFlashlightLight()
     {
+        //audioSource.PlayOneShot(flashlightSound);
         isFlashlightOn = !isFlashlightOn;
         flashlightLight.enabled = isFlashlightOn;
     }
 
 private void SwingAxe()
 {
-    StartCoroutine(AxeSwingAnimation()); // Play swing animation
+    StartCoroutine(AxeSwingAnimation());
 
     // Check if the player is inside a board's trigger zone
     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f); // Adjust radius
@@ -114,7 +115,7 @@ private void SwingAxe()
         BreakBoard board = col.GetComponent<BreakBoard>();
         if (board != null && board.IsPlayerInside())
         {
-            Destroy(board.gameObject); // Deactivate board
+            Destroy(board.gameObject);
             break;
         }
     }

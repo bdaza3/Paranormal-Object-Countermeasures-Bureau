@@ -24,7 +24,7 @@ public class SceneSelector : MonoBehaviour
             playerRigidbody = player.GetComponent<Rigidbody>();
         }
 
-        noteImage.enabled = false; // Ensure the note starts hidden
+        noteImage.enabled = false; 
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,11 +52,11 @@ public class SceneSelector : MonoBehaviour
 
         if (isNoteVisible)
         {
-            if (Input.GetKeyDown(KeyCode.N)) // N to close the note
+            if (Input.GetKeyDown(KeyCode.N)) //N to close the note
             {
                 HideNote();
             }
-            else if (Input.GetKeyDown(KeyCode.Y)) // Y to change scene
+            else if (Input.GetKeyDown(KeyCode.Y)) //Y to change scene
             {
                 ChangeScene();
             }
@@ -66,15 +66,14 @@ public class SceneSelector : MonoBehaviour
     private void ShowNote()
     {
         isNoteVisible = true;
-        sceneToLoad = note.tag; // Store the tag as the scene name
+        sceneToLoad = note.tag; 
         noteImage.enabled = true;
 
         if (playerMovement != null)
-            playerMovement.enabled = false; // Disable movement
+            playerMovement.enabled = false; 
 
         if (playerRigidbody != null)
-            playerRigidbody.isKinematic = true; // Freeze physics
-
+            playerRigidbody.isKinematic = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -85,10 +84,10 @@ public class SceneSelector : MonoBehaviour
         noteImage.enabled = false;
 
         if (playerMovement != null)
-            playerMovement.enabled = true; // Re-enable movement
+            playerMovement.enabled = true;
 
         if (playerRigidbody != null)
-            playerRigidbody.isKinematic = false; // Unfreeze physics
+            playerRigidbody.isKinematic = false;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
