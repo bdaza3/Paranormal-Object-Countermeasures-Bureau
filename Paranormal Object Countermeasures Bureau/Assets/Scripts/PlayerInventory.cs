@@ -4,7 +4,9 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using NUnit.Framework;
 
-public class FlashlightInventory : MonoBehaviour
+
+
+public class PlayerInventory : MonoBehaviour
 {
     [Header("Inventory Items")]
     public GameObject flashlight;
@@ -21,6 +23,7 @@ public class FlashlightInventory : MonoBehaviour
     [Header("Player Settings")]
     public bool isFlashlightEquipped = false;
     public bool isAxeEquipped = false;
+    public bool isDrillEquipped = false;
     public bool isFlashlightOn = false;
     public bool axeObtained = false;
     public bool drillObtained = false;
@@ -89,7 +92,7 @@ public class FlashlightInventory : MonoBehaviour
 
     private void EquipPowerDrill()
     {
-        isAxeEquipped = false;
+        isDrillEquipped = true;
 
         drill.SetActive(true);
         axe.SetActive(false);
@@ -115,7 +118,8 @@ private void SwingAxe()
         BreakBoard board = col.GetComponent<BreakBoard>();
         if (board != null && board.IsPlayerInside())
         {
-            Destroy(board.gameObject);
+            board.SetKinematic();
+            col.isTrigger = false;
             break;
         }
     }

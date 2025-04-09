@@ -29,6 +29,7 @@ public class PickUpScript : MonoBehaviour
         // Throw object
         if (Input.GetKeyDown(KeyCode.T) && heldObj != null)
         {
+            Debug.Log("throwing: " + heldObj);
             ThrowObject();
         }
 
@@ -79,6 +80,8 @@ public class PickUpScript : MonoBehaviour
             heldObjRb.isKinematic = false;
             heldObj.transform.parent = null;
             heldObjRb.AddForce(Camera.main.transform.forward * throwForce);
+            SoundManager.MakeSound(heldObj.transform.position, 16f);
+            Debug.Log("Sound made at: " + heldObj.transform.position);
             heldObj = null;
         }
     }

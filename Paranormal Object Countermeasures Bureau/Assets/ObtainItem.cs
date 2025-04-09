@@ -35,7 +35,7 @@ public class ObtainItem : MonoBehaviour
     {
         if (player != null)
         {
-            FlashlightInventory inventory = player.GetComponent<FlashlightInventory>();
+            PlayerInventory inventory = player.GetComponent<PlayerInventory>();
 
             if (inventory != null)
             {

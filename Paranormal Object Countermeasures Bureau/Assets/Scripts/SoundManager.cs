@@ -5,7 +5,7 @@ public static class SoundManager
 {
     public static void MakeSound(Vector3 soundOrigin, float soundRange)
     {
-        Debug.Log("Sound MADE by player");
+        //Debug.Log("Sound MADE by player");
 
         //get all colliders within the sound range
         Collider[] colliders = Physics.OverlapSphere(soundOrigin, soundRange);

@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift)) //if shift is pressed
         {
             currentMoveSpeed = runSpeed; //run speed
-            SoundManager.MakeSound(transform.position, 16f); //running sound trigger
+            SoundManager.MakeSound(transform.position, 15f); //running sound trigger
         }
         else
         {
