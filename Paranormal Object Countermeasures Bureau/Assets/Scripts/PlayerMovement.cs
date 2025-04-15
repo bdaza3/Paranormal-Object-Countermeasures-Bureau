@@ -1,60 +1,172 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f; //default movement speed
-    public float runSpeed = 9f;  //running speed
-    public float lookSpeedX = 3f; 
-    public float lookSpeedY = 3f; 
+    //movement
+    public float walkSpeed = 8f;
+    public float runSpeed = 25f;
+    public float crouchSpeed = 2.5f;
+    private float currentSpeed;
 
+    //mouse look
+    public float lookSpeedX = 3f;
+    public float lookSpeedY = 3f;
+
+    //crouch
+    public float standHeight = 2f;
+    public float crouchHeight = 1f;
+    public float crouchCameraHeight = 1f;
+    public float standCameraHeight = 1.8f;
+    public float crouchTransitionSpeed = 6f;
+
+    //jump
+    public float jumpForce = 1.5f; // Force applied when jumping
+    private bool canJump = true; // Flag to control jump cooldown
+
+
+    public float gravity = -9.81f;
+    private Vector3 velocity;
+
+    //SOUNDS
+    public AudioSource WalkAudioSource;
+    public AudioSource VentAudioSource;
+    [SerializeField] private AudioClip footstepSound;
+    [SerializeField] private AudioClip ventSound;
+
+    private CharacterController characterController;
     private Camera playerCamera;
-    private float rotationX = 0f; 
+
+    private float rotationX = 0f;
+    private bool isCrouching = false;
 
     private void Start()
     {
-        playerCamera = Camera.main; 
+        characterController = GetComponent<CharacterController>();
+        playerCamera = Camera.main;
+
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false; 
+        Cursor.visible = false;
+
+        currentSpeed = walkSpeed;
+
+        //defaultCamPos = playerCamera.transform.localPosition;
+
     }
 
     private void Update()
     {
-        MoveCharacter(); 
-        LookAround();
+        HandleLook();
+        HandleCrouch();
+        HandleMovement();
+        ApplyGravity();
+        HandleJump(); 
+        //HandleHeadBob();
     }
 
-    private void MoveCharacter()
+    private void HandleLook()
     {
-        float horizontal = Input.GetAxis("Horizontal"); 
-        float vertical = Input.GetAxis("Vertical"); 
+        float mouseX = Input.GetAxis("Mouse X") * lookSpeedX;
+        float mouseY = Input.GetAxis("Mouse Y") * lookSpeedY;
 
-        float currentMoveSpeed = moveSpeed; //default speed
-        if (Input.GetKey(KeyCode.LeftShift)) //if shift is pressed
-        {
-            currentMoveSpeed = runSpeed; //run speed
-            SoundManager.MakeSound(transform.position, 15f); //running sound trigger
-        }
-        else
-        {
-            SoundManager.MakeSound(transform.position, 8f); //walking sound trigger
-        }
-        Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (moveDirection.magnitude >= 0.1f)
-        {
-            float moveSpeedAdjusted = currentMoveSpeed * Time.deltaTime;
-            transform.Translate(moveDirection * moveSpeedAdjusted); 
-        }
-    }
-
-    private void LookAround()
-    {
-        float mouseX = Input.GetAxis("Mouse X") * lookSpeedX; 
-        float mouseY = Input.GetAxis("Mouse Y") * lookSpeedY; 
         transform.Rotate(Vector3.up * mouseX);
 
         rotationX -= mouseY;
-        rotationX = Mathf.Clamp(rotationX, -90f, 90f); 
+        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
+    }
+
+    private void HandleMovement()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        bool isMoving = horizontal != 0 || vertical != 0;
+
+        if (Input.GetKey(KeyCode.LeftShift) && !isCrouching) //running
+        {
+            currentSpeed = runSpeed;
+            //WalkAudioSource.Play();
+
+            if (isMoving) SoundManager.MakeSound(transform.position, 15f); 
+        }
+        else if (isCrouching) //crouching
+        {
+            currentSpeed = crouchSpeed;
+            if (isMoving) SoundManager.MakeSound(transform.position, 2f);
+        }
+        else //walking
+        {
+            currentSpeed = walkSpeed;
+            if (isMoving) SoundManager.MakeSound(transform.position, 8f);
+        }
+
+        Vector3 move = transform.right * horizontal + transform.forward * vertical;
+        move.Normalize(); //normalize the movement vector to prevent faster diagonal movement
+        characterController.Move(move * currentSpeed * Time.deltaTime);
+    }
+
+    private void HandleJump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded && canJump)
+        {
+            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity); // Apply jump force
+            canJump = false; // Disable jumping
+            Invoke(nameof(ResetJump), 2f); // Re-enable jumping after 2 seconds
+        }
+    }
+
+    private void ResetJump()
+    {
+        canJump = true; // Re-enable jumping
+    }
+
+    private void ApplyGravity() //apply gravity
+    {
+        if (characterController.isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+
+        velocity.y += gravity * Time.deltaTime;
+        characterController.Move(velocity * Time.deltaTime);
+    }
+
+    private void HandleCrouch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (isCrouching)
+            {
+                if (CanStandUp())
+                {
+                    isCrouching = false; //standing up
+                    characterController.height = standHeight; //change height of controller
+                }
+                else
+                {
+                    Debug.Log("Not enough space above");
+                }
+            }
+            else
+            {
+                isCrouching = true; //crouch
+                characterController.height = crouchHeight; //change height of controller
+            }
+        }
+
+        float targetCamY = isCrouching ? crouchCameraHeight : standCameraHeight;
+        Vector3 camPos = playerCamera.transform.localPosition;
+        camPos.y = Mathf.Lerp(camPos.y, targetCamY, Time.deltaTime * crouchTransitionSpeed);
+        playerCamera.transform.localPosition = camPos;
+    }
+
+    private bool CanStandUp()
+    {
+        Vector3 start = transform.position + Vector3.up * (characterController.height / 2f);
+        float checkDistance = standHeight - crouchHeight;
+
+        return !Physics.Raycast(start, Vector3.up, checkDistance);
     }
 }

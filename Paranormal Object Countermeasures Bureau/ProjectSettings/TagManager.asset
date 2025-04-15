@@ -10,6 +10,10 @@ TagManager:
   - Board
   - DrillItem
   - BigMonster
+  - KeyItem
+  - VentEvent
+  - VentScare
+  - RedRoom
   layers:
   - Default
   - TransparentFX
