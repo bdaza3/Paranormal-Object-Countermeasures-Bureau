@@ -15,7 +15,8 @@ public static class SoundManager
             if (col.CompareTag("BigMonster"))
             {
                 AIScript ai = col.GetComponent<AIScript>();
-                if (ai != null)
+                //make sure monster isnt chasing player
+                if (ai != null && ai.currentState != AIScript.State.Chase)
                 {
                     ai.HearSound(soundOrigin);  //call the function on the monster
                     Debug.Log("Sound heard by monster");

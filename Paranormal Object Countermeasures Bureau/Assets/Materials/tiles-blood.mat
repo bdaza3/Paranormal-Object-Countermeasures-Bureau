@@ -9,7 +9,11 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: tiles-blood
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+<<<<<<< Updated upstream
   m_Parent: {fileID: 0}
+=======
+  m_Parent: {fileID: 2100000, guid: e31004f423518469191e0d348abc5a5d, type: 2}
+>>>>>>> Stashed changes
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -29,6 +33,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 274f3406654fb4172a038db01134d2d8, type: 3}
         m_Scale: {x: 100, y: 100}
         m_Offset: {x: 0, y: 0}
+<<<<<<< Updated upstream
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -49,10 +54,13 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+=======
+>>>>>>> Stashed changes
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 274f3406654fb4172a038db01134d2d8, type: 3}
         m_Scale: {x: 100, y: 100}
         m_Offset: {x: 0, y: 0}
+<<<<<<< Updated upstream
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -119,6 +127,11 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+=======
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+>>>>>>> Stashed changes
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &4181018718101101426

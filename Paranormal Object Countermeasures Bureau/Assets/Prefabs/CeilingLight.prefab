@@ -154,9 +154,15 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+<<<<<<< Updated upstream
   m_Intensity: 100
   m_Range: 15
   m_SpotAngle: 114.61283
+=======
+  m_Intensity: 80
+  m_Range: 15
+  m_SpotAngle: 88.61283
+>>>>>>> Stashed changes
   m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:

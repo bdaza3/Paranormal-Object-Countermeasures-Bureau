@@ -1,4 +1,3 @@
-repository "Paranormal Object Countermeasures Bureau/Paranormal Object Countermeasures Bureau@2475779278361@cloud"
+rep "Paranormal Object Countermeasures Bureau/Paranormal Object Countermeasures Bureau@2475779278361@cloud"
   path "/"
-    br "/main"
-    co "/main"
+    smartbranch "/main" changeset "38"
