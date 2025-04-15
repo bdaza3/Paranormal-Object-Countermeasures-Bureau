@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using NUnit.Framework;
 using Unity.VisualScripting;
+using System;
 
 
 
@@ -257,6 +258,31 @@ public class PlayerInventory : MonoBehaviour
             AmbientAudioSource.Play();
             AmbientAudioSource.loop = true;
         }
+    }
+
+    public bool getObtained(string item){
+        if(item == "axe"){
+            return axeObtained;
+        }
+        if(item == "drill"){
+            return drillObtained;
+        }
+        return false;
+    }
+
+    public bool isEquipped(string item){
+        if (item == "axe")
+        {
+            return isAxeEquipped;
+        }
+        if (item == "drill")
+        {
+            return isDrillEquipped;
+        }
+        if (item == "flashlight"){
+            return isFlashlightEquipped;
+        }
+        return false;
     }
 }
 

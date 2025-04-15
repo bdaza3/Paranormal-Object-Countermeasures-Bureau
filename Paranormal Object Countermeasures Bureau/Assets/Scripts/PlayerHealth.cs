@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     private float damageMultiplier;
     public float opacity = 0.5f;
     public float bigM;
+    public float classM;
     [SerializeField] private Graphic redUI;
     [SerializeField]public Graphic gameOver;
 
@@ -61,13 +62,14 @@ public class PlayerHealth : MonoBehaviour
 
             StartCoroutine(LoadMenuAfterDelay(4f)); // Start the coroutine to load the menu after 2 seconds
         }
+        if(health <= 0){gameOverColor.a = 1; gameOver.color = gameOverColor;}
     }
 
     // Coroutine to handle the delay and scene loading
     private IEnumerator LoadMenuAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay); // Wait for the specified delay
-        SceneManager.LoadScene("MenuScene"); // Replace "MenuScene" with the name of your menu scene
+        SceneManager.LoadScene("MenuScene"); // Load Menu Scene
     }
 
     void OnTriggerEnter(Collider other)
@@ -75,6 +77,11 @@ public class PlayerHealth : MonoBehaviour
         if(other.gameObject.CompareTag("BigMonster")){
             inDistance = true;
             damageMultiplier = bigM;
+        }
+        if (other.gameObject.CompareTag("ClassMonster"))
+        {
+            inDistance = true;
+            damageMultiplier = classM;
         }
     }
 

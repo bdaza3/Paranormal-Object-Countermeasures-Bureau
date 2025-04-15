@@ -55,15 +55,24 @@ public class ThoughtDialogueManager : MonoBehaviour
 
         onComplete?.Invoke();
     }
-    else{
+    else{//if it is a note
         noteText.text = "";
         noteText.alpha = 1;
-
-        float typingSpeed = 0.03f; //smaller is faster
+        //get the bool from the note if it is faculty or red room
+        float typingSpeed = 0.02f; //smaller is faster
+        NoteAppear noteAppear = FindFirstObjectByType<NoteAppear>();
+        if (noteAppear.facultyNote){
+            noteText.fontSize = 15;
+            typingSpeed = 0.02f; //smaller is faster
+        }
+        else if (noteAppear.redRoomNote){
+            noteText.fontSize = 22;
+            typingSpeed = 0.05f; //smaller is faster
+        }
         foreach (char letter in message.ToCharArray())
         {
             noteText.text += letter;
-            yield return new WaitForSeconds(typingSpeed + 0.025f);
+            yield return new WaitForSeconds(typingSpeed);
         }
     }
     }

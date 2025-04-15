@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6221978254946278224}
   - component: {fileID: 3865541659117475235}
   - component: {fileID: 81131895167069160}
+  - component: {fileID: 6110277346885148290}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -126,10 +127,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7e6fb106add2742a0c44c73e4ef74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  walkSpeed: 8
   runSpeed: 9
+  crouchSpeed: 2.5
   lookSpeedX: 3
   lookSpeedY: 3
+  standHeight: 2
+  crouchHeight: 1
+  crouchCameraHeight: 1
+  standCameraHeight: 1.8
+  crouchTransitionSpeed: 6
+  jumpForce: 1.5
+  gravity: -9.81
+  WalkAudioSource: {fileID: 0}
+  VentAudioSource: {fileID: 0}
+  footstepSound: {fileID: 0}
+  runningSound: {fileID: 0}
+  ventSound: {fileID: 0}
+  staminaInterval: 3
+  cooldownInterval: 2
 --- !u!54 &3865541659117475235
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -174,15 +190,48 @@ MonoBehaviour:
   axe: {fileID: 5222691553028624988}
   drill: {fileID: 446252378257233440}
   flashlightLight: {fileID: 4941296842179485909}
+  dimVentLight: {fileID: 0}
+  ItemAudioSource: {fileID: 0}
+  flashlightSound: {fileID: 0}
+  axeSound: {fileID: 0}
+  AmbientAudioSource: {fileID: 0}
+  ambientBGM: {fileID: 0}
+  redRoomBGM: {fileID: 0}
+  chaseBGM: {fileID: 0}
+  heartbeat: {fileID: 0}
   isFlashlightEquipped: 0
   isAxeEquipped: 0
+  isDrillEquipped: 0
   isFlashlightOn: 0
   axeObtained: 0
   drillObtained: 0
+  keyObtained: 0
   axeSwingDistance: 2
-  boardLayer:
+--- !u!143 &6110277346885148290
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311006301242312805}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4870539391885370073
 GameObject:
   m_ObjectHideFlags: 0

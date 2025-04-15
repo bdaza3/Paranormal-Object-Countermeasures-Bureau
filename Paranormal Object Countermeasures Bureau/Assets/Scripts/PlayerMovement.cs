@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -40,6 +41,14 @@ public class PlayerMovement : MonoBehaviour
 
     private float rotationX = 0f;
     private bool isCrouching = false;
+
+    private float currTime;
+    private float startTime = 0;
+    // private float cooldownTime = 0;
+    // private float cooldownStart = 0;
+    public float staminaInterval = 3f;
+    public float cooldownInterval = 2f;
+    private bool tired = false;
 
     private void Start()
     {
@@ -111,11 +120,21 @@ public class PlayerMovement : MonoBehaviour
 
         bool isMoving = horizontal != 0 || vertical != 0;
 
-        if (Input.GetKey(KeyCode.LeftShift) && !isCrouching) //running
+        if (Input.GetKey(KeyCode.LeftShift) && !isCrouching && !tired) //running
         {
-            currentSpeed = runSpeed;
-            if (WalkAudioSource.resource != runningSound) { WalkAudioSource.resource = runningSound; }
-            if (isMoving) SoundManager.MakeSound(transform.position, 15f); 
+
+                currTime += Time.deltaTime;
+                currentSpeed = runSpeed;
+                if (WalkAudioSource.resource != runningSound) { WalkAudioSource.resource = runningSound; }
+                if (isMoving) SoundManager.MakeSound(transform.position, 15f);
+
+            if(currTime - startTime >= staminaInterval){
+                tired = true;
+                currentSpeed = walkSpeed;
+                currTime = 0;
+                startTime = 0;
+                Debug.Log("cooldown started!");
+            }
         }
         else if (isCrouching) //crouching
         {
@@ -127,6 +146,16 @@ public class PlayerMovement : MonoBehaviour
             currentSpeed = walkSpeed;
             if (WalkAudioSource.resource != footstepSound) { WalkAudioSource.resource = footstepSound; }
             if (isMoving) SoundManager.MakeSound(transform.position, 8f);
+            if(tired){
+                currTime += Time.deltaTime;
+                if (currTime - startTime >= cooldownInterval)
+                {
+                    Debug.Log("cooldown ended!");
+                    tired = false;
+                    currTime = 0;
+                    startTime = 0;
+                }
+            }
         }
 
         if(!isMoving){WalkAudioSource.resource = null;}

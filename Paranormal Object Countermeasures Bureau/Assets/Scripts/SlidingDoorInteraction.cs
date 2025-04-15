@@ -14,9 +14,8 @@ public class SlidingDoorInteraction : MonoBehaviour
 
     public bool keyNeeded; 
 
-    private Vector3 doorOriginalPosition; 
+    private Vector3 doorOriginalPosition;
 
-    
 
     void Start()
     {

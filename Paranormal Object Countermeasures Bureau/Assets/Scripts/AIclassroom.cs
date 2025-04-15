@@ -11,22 +11,23 @@ public class AIclassroom : MonoBehaviour
     // Reference to the player's flashlight
     public Light flashlightLight; // Assign this in the Unity Editor
 
+
+    private bool isVisible;
+
     void Start()
     {
         anim = GetComponent<Animator>();
-        Debug.Log("AIclassroom script started.");
     }
 
     void Update()
     {
-        // Check if the flashlight is on
-        if (flashlightLight != null && flashlightLight.enabled)
-        {
-            // If the flashlight is on, force the zombie to stay idle
-            SetAnimationState(true, false, false); // Idle state
-            return; // Exit the Update method to prevent further checks
-        }
 
+        if (isVisible)
+        {
+            //Debug.Log("Object is visible");
+            SetAnimationState(true, false, false);
+            return;
+        }
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (distanceToPlayer <= stopRange && !isAttacking)
@@ -80,5 +81,17 @@ public class AIclassroom : MonoBehaviour
         anim.SetBool("Idle", isIdle);
         anim.SetBool("Walk", isWalking);
         anim.SetBool("Attack", isAttacking);
+    }
+
+    void OnBecameVisible()
+    {
+        Debug.Log(isVisible);
+        isVisible = true;  
+    }
+
+    void OnBecameInvisible()
+    {
+        Debug.Log(isVisible);
+        isVisible = false;
     }
 }
