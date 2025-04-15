@@ -21,14 +21,11 @@ public class PlayerMovement : MonoBehaviour
     public float standCameraHeight = 1.8f;
     public float crouchTransitionSpeed = 6f;
 
-<<<<<<< HEAD
     //jump
     public float jumpForce = 1.5f; // Force applied when jumping
     private bool canJump = true; // Flag to control jump cooldown
 
 
-=======
->>>>>>> 8343ef2d92b5e4bbc0794596eafbdd8273a21760
     public float gravity = -9.81f;
     private Vector3 velocity;
 
@@ -64,10 +61,8 @@ public class PlayerMovement : MonoBehaviour
         HandleCrouch();
         HandleMovement();
         ApplyGravity();
-<<<<<<< HEAD
         HandleJump(); 
-=======
->>>>>>> 8343ef2d92b5e4bbc0794596eafbdd8273a21760
+        LookAround();
         //HandleHeadBob();
     }
 
@@ -76,10 +71,8 @@ public class PlayerMovement : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * lookSpeedX;
         float mouseY = Input.GetAxis("Mouse Y") * lookSpeedY;
 
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-        float currentMoveSpeed = moveSpeed; //default speed
+
+        float currentMoveSpeed = walkSpeed; //default speed
         if (Input.GetKey(KeyCode.LeftShift)) //if shift is pressed
         {
             currentMoveSpeed = runSpeed; //run speed
@@ -89,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         {
             SoundManager.MakeSound(transform.position, 8f); //walking sound trigger
         }
-        Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 moveDirection = new Vector3(mouseX, 0f, mouseY).normalized;
 
         if (moveDirection.magnitude >= 0.1f)
         {
@@ -102,9 +95,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X") * lookSpeedX; 
         float mouseY = Input.GetAxis("Mouse Y") * lookSpeedY; 
-=======
->>>>>>> Stashed changes
->>>>>>> 8343ef2d92b5e4bbc0794596eafbdd8273a21760
+
         transform.Rotate(Vector3.up * mouseX);
 
         rotationX -= mouseY;
@@ -142,7 +133,6 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(move * currentSpeed * Time.deltaTime);
     }
 
-<<<<<<< HEAD
     private void HandleJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded && canJump)
@@ -158,8 +148,6 @@ public class PlayerMovement : MonoBehaviour
         canJump = true; // Re-enable jumping
     }
 
-=======
->>>>>>> 8343ef2d92b5e4bbc0794596eafbdd8273a21760
     private void ApplyGravity() //apply gravity
     {
         if (characterController.isGrounded && velocity.y < 0)
