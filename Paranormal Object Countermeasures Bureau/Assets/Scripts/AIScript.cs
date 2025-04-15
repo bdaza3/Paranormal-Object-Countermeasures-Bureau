@@ -37,7 +37,7 @@ public class AIScript : MonoBehaviour
         {
             case State.Patrol: //patrol state
                 animator.SetTrigger("Walk"); //set the walk animation
-                Debug.Log("Patrolling..");
+                //Debug.Log("Patrolling..");
                 agent.speed = 3f; //normal speed
                 PatrolBehavior();
                 if (distanceToPlayer < chaseRange)
@@ -46,7 +46,7 @@ public class AIScript : MonoBehaviour
 
             case State.Investigate: //monster hears a sound
                 animator.SetTrigger("Walk"); //set the walk animation
-                Debug.Log("Investigating..");
+                //Debug.Log("Investigating..");
                 agent.speed = 5f; //speed walk to investigate
                 InvestigateBehavior();
                 if (distanceToPlayer < chaseRange)
@@ -55,7 +55,7 @@ public class AIScript : MonoBehaviour
 
             case State.Chase: //chase player
                 animator.SetTrigger("Chase"); //set the run animation
-                Debug.Log("Chasing..");
+                //Debug.Log("Chasing..");
                 agent.speed = 7f; //run speed
                 ChaseBehavior();
                 if (distanceToPlayer > chaseRange * 3f) //if the player is too far away
@@ -97,7 +97,7 @@ public class AIScript : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) < 2f) //if the monster is close to the player
         {
             //animator.SetTrigger("Attack"); //attack animation
-            Debug.Log("Attacking player..");
+            //Debug.Log("Attacking player..");
         }
     }
 

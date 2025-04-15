@@ -4,12 +4,27 @@ public class BreakBoard : MonoBehaviour
 {
     private bool playerInTrigger = false;
     private Rigidbody rb;
+    public GameObject barrier;
+    private Collider myCollider;
+    private Collider barrierCollider;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        myCollider = GetComponent<Collider>();
+        barrierCollider = barrier.GetComponent<Collider>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log("Collision Detected");
+        if (other.CompareTag("AxeItem"))
         {
+            Debug.Log("Axe Collided with Board");
             playerInTrigger = true;
+            rb.isKinematic = false;
+            myCollider.isTrigger = false;
+            barrierCollider.enabled = false;
         }
     }
 
@@ -26,9 +41,10 @@ public class BreakBoard : MonoBehaviour
         return playerInTrigger;
     }
 
-    public void SetKinematic(){
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = false;
-    }
+    // public void SetKinematic(){
+    //     rb = GetComponent<Rigidbody>();
+    //     rb.isKinematic = false;
+    //     barrier.SetActive(false);
+    // }
 }
 

@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 1.5f; // Force applied when jumping
     private bool canJump = true; // Flag to control jump cooldown
 
-
     public float gravity = -9.81f;
     private Vector3 velocity;
 
@@ -33,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource WalkAudioSource;
     public AudioSource VentAudioSource;
     [SerializeField] private AudioClip footstepSound;
+    [SerializeField] private AudioClip runningSound;
     [SerializeField] private AudioClip ventSound;
 
     private CharacterController characterController;
@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
         currentSpeed = walkSpeed;
 
+        WalkAudioSource = GetComponent<AudioSource>();
         //defaultCamPos = playerCamera.transform.localPosition;
 
     }
@@ -64,6 +65,18 @@ public class PlayerMovement : MonoBehaviour
         HandleJump(); 
         LookAround();
         //HandleHeadBob();
+    }
+
+    private void LookAround()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * lookSpeedX;
+        float mouseY = Input.GetAxis("Mouse Y") * lookSpeedY;
+
+        transform.Rotate(Vector3.up * mouseX);
+
+        rotationX -= mouseY;
+        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
+        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
     }
 
     private void HandleLook()
@@ -91,18 +104,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void LookAround()
-    {
-        float mouseX = Input.GetAxis("Mouse X") * lookSpeedX; 
-        float mouseY = Input.GetAxis("Mouse Y") * lookSpeedY; 
-
-        transform.Rotate(Vector3.up * mouseX);
-
-        rotationX -= mouseY;
-        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
-        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
-    }
-
     private void HandleMovement()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -113,8 +114,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && !isCrouching) //running
         {
             currentSpeed = runSpeed;
-            //WalkAudioSource.Play();
-
+            if (WalkAudioSource.resource != runningSound) { WalkAudioSource.resource = runningSound; }
             if (isMoving) SoundManager.MakeSound(transform.position, 15f); 
         }
         else if (isCrouching) //crouching
@@ -125,8 +125,13 @@ public class PlayerMovement : MonoBehaviour
         else //walking
         {
             currentSpeed = walkSpeed;
+            if (WalkAudioSource.resource != footstepSound) { WalkAudioSource.resource = footstepSound; }
             if (isMoving) SoundManager.MakeSound(transform.position, 8f);
         }
+
+        if(!isMoving){WalkAudioSource.resource = null;}
+
+        if(!WalkAudioSource.isPlaying && isMoving){WalkAudioSource.Play();}
 
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
         move.Normalize(); //normalize the movement vector to prevent faster diagonal movement
@@ -161,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleCrouch()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             if (isCrouching)
             {
