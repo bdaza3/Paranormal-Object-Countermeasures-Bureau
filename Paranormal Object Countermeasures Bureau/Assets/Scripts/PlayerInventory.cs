@@ -152,19 +152,19 @@ public class PlayerInventory : MonoBehaviour
     {
         StartCoroutine(AxeSwingAnimation());
 
-        // Check if the player is inside a board's trigger zone
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f); // Adjust radius
-        foreach (Collider col in hitColliders)
+    // Check if the player is inside a board's trigger zone
+    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f); // Adjust radius
+    foreach (Collider col in hitColliders)
+    {
+        BreakBoard board = col.GetComponent<BreakBoard>();
+        if (board != null && board.IsPlayerInside())
         {
-            BreakBoard board = col.GetComponent<BreakBoard>();
-            if (board != null && board.IsPlayerInside())
-            {
-                board.SetKinematic();
-                col.isTrigger = false;
-                break;
-            }
+            board.SetKinematic();
+            col.isTrigger = false;
+            break;
         }
     }
+}
 
     private IEnumerator AxeSwingAnimation()
     {
