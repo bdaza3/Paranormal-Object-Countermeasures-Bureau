@@ -25,6 +25,7 @@ public class PlayerInventory : MonoBehaviour
     public AudioSource ItemAudioSource;
     [SerializeField] private AudioClip flashlightSound;
     [SerializeField] private AudioClip axeSound;
+    [SerializeField] private AudioClip drillSoundItem;
 
     public AudioSource AmbientAudioSource;
 
@@ -36,8 +37,24 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] private AudioClip heartbeat;
 
+    public AudioSource MiscEventAudioSource;
+
+    [SerializeField] private AudioClip BellChime;
+    [SerializeField] private AudioClip VentScare;
 
 
+    //MISC OBJECTS
+    public GameObject VentScareObj;
+
+    public GameObject BellChimeObj;
+
+    public GameObject facultyNoteObj;
+
+    public GameObject MonsterHallway; //spawnable monster in hallway after key
+    public GameObject Monster1B; //spawnable monster after vent
+
+    //array of barrier objects
+    public GameObject[] barriers;
 
 
     [Header("Player Settings")]
@@ -53,11 +70,19 @@ public class PlayerInventory : MonoBehaviour
     public float axeSwingDistance = 2f; //How far the axe can hit
     //public LayerMask boardLayer; 
 
-    bool inVent = false; //is the player in a vent
+    public bool inVent = false; //is the player in a vent
     bool inRedRoom = false; //is the player in the red room
 
-    private void Start()
+    private bool canPlayDrillSound = true; // Flag to control drill sound cooldown
+
+    private void Start() //UPON START
     {
+        //show initial objective and dialogue
+        FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I've got to find the missing student here...",
+            () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("First I should head to the faculty office for any clues.",
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Head to the faculty office")
+            )
+        );
         flashlight.SetActive(false);
         offhandLight.SetActive(false);
         axe.SetActive(false);
@@ -95,6 +120,12 @@ public class PlayerInventory : MonoBehaviour
         {
             SwingAxe();
         }
+
+        if (isDrillEquipped && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            DrillSound();
+        }
+
         if (inVent){
             flashlightLight.enabled = false; //turn off flashlight in vent
             offhandLight.SetActive(false); //turn off offhand light in vent
@@ -107,6 +138,7 @@ public class PlayerInventory : MonoBehaviour
     {
         isFlashlightEquipped = true;
         isAxeEquipped = false;
+        isDrillEquipped = false;
 
         flashlight.SetActive(true);
         offhandLight.SetActive(false);
@@ -119,6 +151,8 @@ public class PlayerInventory : MonoBehaviour
     private void EquipAxe()
     {
         isAxeEquipped = true;
+        isFlashlightEquipped = false;
+        isDrillEquipped = false;
 
         axe.SetActive(true);
         drill.SetActive(false);
@@ -129,6 +163,8 @@ public class PlayerInventory : MonoBehaviour
     private void EquipPowerDrill()
     {
         isDrillEquipped = true;
+        isFlashlightEquipped = false;
+        isAxeEquipped = false;
 
         drill.SetActive(true);
         axe.SetActive(false);
@@ -147,6 +183,23 @@ public class PlayerInventory : MonoBehaviour
 
         isFlashlightOn = !isFlashlightOn;
         flashlightLight.enabled = isFlashlightOn;
+    }
+
+    private void DrillSound()
+    {
+        if (!canPlayDrillSound) return; // Exit if the cooldown is active
+
+        // Play the drill sound
+        ItemAudioSource.PlayOneShot(drillSoundItem, 1.5f);
+
+        // Disable further sound playing and start cooldown
+        canPlayDrillSound = false;
+        Invoke(nameof(ResetDrillSoundCooldown), 2f); // Reset cooldown after 2 seconds
+    }
+
+    private void ResetDrillSoundCooldown()
+    {
+        canPlayDrillSound = true; // Re-enable drill sound
     }
 
     private void SwingAxe()
@@ -203,28 +256,51 @@ public class PlayerInventory : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
+    {   
+        //play bell sound when entering bell trigger and note is not active
+        if (other.CompareTag("BellChime") && facultyNoteObj.activeSelf == false)
+        {
+            Debug.Log("Bell sound played");
+            MiscEventAudioSource.clip = BellChime;
+            MiscEventAudioSource.PlayOneShot(BellChime);
+            BellChimeObj.SetActive(false); //turn off bell chime object
+            //remove all barriers
+            foreach (GameObject barrier in barriers)
+            {
+                barrier.SetActive(false);
+            }
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowThought("  The bell chime..? I should check it out...",
+                () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("Just have to watch out for Paranormal Objects...",
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Investigate the school.")
+                )
+            );
+        }
         if (other.CompareTag("VentEvent"))
         {
             inVent = true;
             AmbientAudioSource.Stop(); //stop music in vent
+            RenderSettings.fog = false;
 
             //turn off flashlight and turn on vent light
             flashlightLight.enabled = false;
             offhandLight.SetActive(false); //turn off offhand light in vent
             isFlashlightOn = false;
-            //play vent sound
-
             dimVentLight.enabled = true;
         }
         if (other.CompareTag("VentScare") && keyObtained)//play scare returning to vent after player has key
         {
+            RenderSettings.fog = false;
             Debug.Log("Scare sound played");
-            //play scare sound
+            MiscEventAudioSource.clip = VentScare;
+            MiscEventAudioSource.volume = 2f; //increase volume of scare
+            MiscEventAudioSource.PlayOneShot(VentScare);
+            VentScareObj.SetActive(false); //turn off vent scare object
+
         }
         if (other.CompareTag("RedRoom")){
             inRedRoom = true;
             Debug.Log("Entered red room");
+            RenderSettings.fog = false;
 
             flashlightLight.enabled = false;
             offhandLight.SetActive(false);
@@ -233,7 +309,7 @@ public class PlayerInventory : MonoBehaviour
             //play ambient sound and stop normal bgm
             AmbientAudioSource.Stop(); //stop normal bgm
             AmbientAudioSource.clip = redRoomBGM;
-            //AmbientAudioSource.volume = 1.5f; //increase volume
+            AmbientAudioSource.volume = 1.3f; //increase volume
             AmbientAudioSource.Play();
             AmbientAudioSource.loop = true;
         }
@@ -247,6 +323,9 @@ public class PlayerInventory : MonoBehaviour
             AmbientAudioSource.Play(); //play music when leaving vent
             //turn off vent light, let player toggle flashlight again
             dimVentLight.enabled = false;
+
+            if (keyObtained) //on the way out after key
+                RenderSettings.fog = true;
         }
         if (other.CompareTag("RedRoom")){
             Debug.Log("Leaving red room");
@@ -257,6 +336,9 @@ public class PlayerInventory : MonoBehaviour
             //AmbientAudioSource.volume = 1.0f; //reset volume
             AmbientAudioSource.Play();
             AmbientAudioSource.loop = true;
+            
+            if (keyObtained) //on the way out after key
+                RenderSettings.fog = true;
         }
     }
 

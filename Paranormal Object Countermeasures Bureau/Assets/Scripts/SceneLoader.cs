@@ -6,6 +6,7 @@ public class SceneLoader : MonoBehaviour
     public void LoadGameScene()
     {
         SceneManager.LoadScene("Copy3rd");
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Copy3rd"));
     }
 
     public void LoadMenuScene()

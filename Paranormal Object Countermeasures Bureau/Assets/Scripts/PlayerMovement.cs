@@ -140,6 +140,16 @@ public class PlayerMovement : MonoBehaviour
         {
             currentSpeed = crouchSpeed;
             if (isMoving) SoundManager.MakeSound(transform.position, 2f);
+            PlayerInventory playerInventory = GetComponent<PlayerInventory>();
+            if (playerInventory.inVent){
+                WalkAudioSource.volume = 0.7f; //lower volume of footsteps in vent
+                if (WalkAudioSource.resource != ventSound) { WalkAudioSource.resource = ventSound;}
+            }
+            if (!playerInventory.inVent)
+            {
+                WalkAudioSource.resource = null;
+            }
+
         }
         else //walking
         {

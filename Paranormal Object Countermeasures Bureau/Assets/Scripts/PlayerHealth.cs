@@ -62,14 +62,15 @@ public class PlayerHealth : MonoBehaviour
 
             StartCoroutine(LoadMenuAfterDelay(4f)); // Start the coroutine to load the menu after 2 seconds
         }
-        if(health <= 0){gameOverColor.a = 1; gameOver.color = gameOverColor;}
+        //if(health <= 0){gameOverColor.a = 1; gameOver.color = gameOverColor;}
     }
 
     // Coroutine to handle the delay and scene loading
     private IEnumerator LoadMenuAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay); // Wait for the specified delay
-        SceneManager.LoadScene("MenuScene"); // Load Menu Scene
+        SceneManager.LoadScene("MenuScene"); // Load the menu scene
+        SceneManager.UnloadSceneAsync("Copy3rd");
     }
 
     void OnTriggerEnter(Collider other)

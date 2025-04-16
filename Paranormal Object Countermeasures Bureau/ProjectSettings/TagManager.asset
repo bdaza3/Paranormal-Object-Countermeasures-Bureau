@@ -15,6 +15,7 @@ TagManager:
   - VentScare
   - RedRoom
   - ClassMonster
+  - BellChime
   layers:
   - Default
   - TransparentFX

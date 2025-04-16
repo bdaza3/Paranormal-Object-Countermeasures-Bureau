@@ -10,41 +10,63 @@ public class DoorInteraction : MonoBehaviour
     private bool playerInRange = false;  
     private bool doorIsOpen = true;  
 
-    void Update()
+    public bool isStuckLocked; 
+
+    public bool keyNeeded; 
+
+private bool isRotating = false;
+private float targetRot;
+
+void Update()
+{
+    if (playerInRange && Input.GetKeyDown(KeyCode.E))
     {
-        
-        if (playerInRange && Input.GetKeyDown(KeyCode.E)) //button press is E
+        if (isStuckLocked)
         {
-            ToggleDoor();  
+            FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This door doesn't seem to open at all...");
+            return;
         }
 
-        
-        if (doorIsOpen)
+        if (keyNeeded)
         {
-            RotateDoor(openRot);  
+            PlayerInventory playerInventory = FindFirstObjectByType<PlayerInventory>();
+            if (playerInventory.keyObtained)
+            {
+                ToggleDoor();
+            }
+            else
+            {
+                FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I need a key to open this door...");
+                return;
+            }
         }
         else
         {
-            RotateDoor(closeRot);  
+            ToggleDoor();
         }
     }
 
-    
-    void RotateDoor(float targetRot)
+    if (isRotating)
     {
-        Vector3 currentRot = doorPivot.transform.localEulerAngles;  
-        float targetYRotation = targetRot;
+        Quaternion current = doorPivot.transform.localRotation;
+        Quaternion target = Quaternion.Euler(0, targetRot, 0);
+        doorPivot.transform.localRotation = Quaternion.Slerp(current, target, Time.deltaTime * speed);
 
-        
-        Vector3 newRot = new Vector3(currentRot.x, targetYRotation, currentRot.z);
-        doorPivot.transform.localEulerAngles = Vector3.Lerp(currentRot, newRot, speed * Time.deltaTime);
+        if (Quaternion.Angle(current, target) < 0.1f)
+        {
+            doorPivot.transform.localRotation = target;
+            isRotating = false;
+        }
     }
+}
 
-    
-    void ToggleDoor()
-    {
-        doorIsOpen = !doorIsOpen;  
-    }
+void ToggleDoor()
+{
+    doorIsOpen = !doorIsOpen;
+    targetRot = doorIsOpen ? openRot : closeRot;
+    isRotating = true;
+}
+
 
     
     void OnTriggerEnter(Collider other)

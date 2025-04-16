@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using JetBrains.Annotations;
 
 public class ThoughtDialogueManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class ThoughtDialogueManager : MonoBehaviour
 
     private bool note = false; //visibility of the note
 
+    public bool redRoomNote = false; //if the note is a red room note
+    public bool facultyNote = false; //if the note is a faculty note
+    
     public void ShowThought(string message, System.Action onComplete = null)
     {
         if (currentRoutine != null)
@@ -34,6 +38,7 @@ public class ThoughtDialogueManager : MonoBehaviour
     if (!note){//if not a note and just dialogue
         dialogueText.text = "";
         dialogueText.alpha = 1;
+        dialogueText.fontSize = 25; //default font size
 
         float typingSpeed = 0.03f; //smaller is faster
         foreach (char letter in message.ToCharArray()) //typewriter effect
@@ -60,14 +65,15 @@ public class ThoughtDialogueManager : MonoBehaviour
         noteText.alpha = 1;
         //get the bool from the note if it is faculty or red room
         float typingSpeed = 0.02f; //smaller is faster
-        NoteAppear noteAppear = FindFirstObjectByType<NoteAppear>();
-        if (noteAppear.facultyNote){
-            noteText.fontSize = 15;
-            typingSpeed = 0.02f; //smaller is faster
-        }
-        else if (noteAppear.redRoomNote){
-            noteText.fontSize = 22;
+
+
+        if (redRoomNote){//RED ROOM
+            noteText.fontSize = 30;
             typingSpeed = 0.05f; //smaller is faster
+        }
+        else if (facultyNote){//FACULTY
+            noteText.fontSize = 22;
+            typingSpeed = 0.03f;
         }
         foreach (char letter in message.ToCharArray())
         {
