@@ -187,38 +187,23 @@ public class PlayerInventory : MonoBehaviour
 
     private void DrillSound()
     {
-        if (!canPlayDrillSound) return; // Exit if the cooldown is active
+        if (!canPlayDrillSound) return; //exit if the cooldown is active
 
-        // Play the drill sound
         ItemAudioSource.PlayOneShot(drillSoundItem, 1.5f);
 
-        // Disable further sound playing and start cooldown
+        //disable further sound playing and start cooldown
         canPlayDrillSound = false;
-        Invoke(nameof(ResetDrillSoundCooldown), 2f); // Reset cooldown after 2 seconds
+        Invoke(nameof(ResetDrillSoundCooldown), 2f); //reset cooldown after 2 seconds
     }
 
     private void ResetDrillSoundCooldown()
     {
-        canPlayDrillSound = true; // Re-enable drill sound
+        canPlayDrillSound = true; //re-enable drill sound
     }
 
     private void SwingAxe()
     {
-        StartCoroutine(AxeSwingAnimation());
-
-        // Check if the player is inside a board's trigger zone
-        // Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f); // Adjust radius
-        // foreach (Collider col in hitColliders)
-        // {
-        //     BreakBoard board = col.GetComponent<BreakBoard>();
-        //     if (board != null && board.IsPlayerInside())
-        //     {
-        //         board.SetKinematic();
-        //         col.isTrigger = false;
-        //         Debug.Log("board hit");
-        //         break;
-        //     }
-        // }
+        StartCoroutine(AxeSwingAnimation());        
     }
 
     private IEnumerator AxeSwingAnimation()
@@ -312,6 +297,10 @@ public class PlayerInventory : MonoBehaviour
             AmbientAudioSource.volume = 1.3f; //increase volume
             AmbientAudioSource.Play();
             AmbientAudioSource.loop = true;
+        }
+        if (other.CompareTag("Board") && isAxeEquipped && axeObtained && isSwinging){//remove board if axe is equipped and swing
+            Debug.Log("Destroying board");
+            Destroy(other.gameObject);
         }
     }
 
