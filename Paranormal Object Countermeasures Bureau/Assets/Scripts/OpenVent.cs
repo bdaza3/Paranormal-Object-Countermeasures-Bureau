@@ -113,6 +113,7 @@ public class OpenVent : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Open vent cover");
             isInRange = true;
             player = other.gameObject;
         }
@@ -122,6 +123,7 @@ public class OpenVent : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("");
             isInRange = false;
             player = null;
         }

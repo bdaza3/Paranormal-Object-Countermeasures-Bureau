@@ -70,7 +70,8 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(delay); // Wait for the specified delay
         SceneManager.LoadScene("MenuScene"); // Load the menu scene
-        SceneManager.UnloadSceneAsync("Copy3rd");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     void OnTriggerEnter(Collider other)

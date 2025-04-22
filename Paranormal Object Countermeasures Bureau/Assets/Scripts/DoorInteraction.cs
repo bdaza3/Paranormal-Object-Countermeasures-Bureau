@@ -73,6 +73,7 @@ void ToggleDoor()
     {
         if (other.CompareTag("Player"))
         {
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Open door");
             playerInRange = true;  
         }
     }
@@ -81,6 +82,7 @@ void ToggleDoor()
     {
         if (other.CompareTag("Player"))
         {
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("");
             playerInRange = false;  
         }
     }

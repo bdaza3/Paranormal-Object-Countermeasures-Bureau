@@ -10,51 +10,75 @@ public class AIclassroom : MonoBehaviour
 
     // Reference to the player's flashlight
     public Light flashlightLight; // Assign this in the Unity Editor
-
+    public float speed = 2f;
 
     private bool isVisible;
+    public GameObject boundingBoxObject;
+    private InRoomScript inRoomScript;
+    private bool isInRoom;
+
+    public AudioSource audioSource;
+    public AudioClip moveClip;
+    public AudioClip attackClip;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        if(boundingBoxObject != null){
+            inRoomScript = boundingBoxObject.GetComponent<InRoomScript>();
+        }else{isInRoom = true;}
+
     }
 
     void Update()
     {
+        if(boundingBoxObject != null){
+            isInRoom = inRoomScript.IsInRoom();
+        }
 
         if (isVisible)
         {
             //Debug.Log("Object is visible");
+            if(audioSource.isPlaying && !isAttacking){audioSource.Stop();}
             SetAnimationState(true, false, false);
             return;
         }
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-        if (distanceToPlayer <= stopRange && !isAttacking)
-        {
-            // Player is within attack range
-            isAttacking = true;
-            SetAnimationState(false, false, true); // Attack state
-            Invoke(nameof(ResetAttack), 1f); // Reset attack state after 1 second (adjust as needed)
-        }
-        else if (distanceToPlayer > stopRange && distanceToPlayer <= chaseRange)
-        {
-            // Player is within chase range but not attack range
-            if (!isAttacking)
+        if(isInRoom){
+            if (distanceToPlayer <= stopRange && !isAttacking)
             {
-                SetAnimationState(false, true, false); // Walk state
-                ChasePlayer();
+                audioSource.clip = attackClip;
+                // Player is within attack range
+                isAttacking = true;
+                SetAnimationState(false, false, true); // Attack state
+                Invoke(nameof(ResetAttack), 1f); // Reset attack state after 1 second (adjust as needed)
             }
-        }
-        else
-        {
-            // Player is out of range
-            if (!isAttacking)
+            else if (distanceToPlayer > stopRange && distanceToPlayer <= chaseRange)
             {
-                SetAnimationState(true, false, false); // Idle state
+                // Player is within chase range but not attack range
+                if (!isAttacking)
+                {
+                    audioSource.clip = moveClip;
+                    SetAnimationState(false, true, false); // Walk state
+                    ChasePlayer();
+                }
             }
-        }
+            else
+            {
+                // Player is out of range
+                if (!isAttacking)
+                {
+                    SetAnimationState(true, false, false); // Idle state
+                }
+            }
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        } //TODO: RESET POSITION WHEN PLAYER LEAVES ROOM
     }
+
+
 
     void ChasePlayer()
     {
@@ -68,7 +92,7 @@ public class AIclassroom : MonoBehaviour
 
         // Move towards the player, ignoring the Y-axis
         Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * 2f); // Adjust speed as needed
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * speed); // Adjust speed as needed
     }
 
     void ResetAttack()

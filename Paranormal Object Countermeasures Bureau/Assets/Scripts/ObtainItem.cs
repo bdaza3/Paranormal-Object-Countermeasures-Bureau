@@ -12,6 +12,7 @@ public class ObtainItem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            FindFirstObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Pick up item");
             isInRange = true;
             player = other.gameObject;
         }
@@ -21,6 +22,7 @@ public class ObtainItem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            FindFirstObjectByType<ThoughtDialogueManager>().ShowHoverText("");
             isInRange = false;
             player = null;
         }

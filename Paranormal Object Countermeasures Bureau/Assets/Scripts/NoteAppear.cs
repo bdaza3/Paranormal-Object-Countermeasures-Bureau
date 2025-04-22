@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI; 
 
@@ -39,6 +40,7 @@ public class NoteAppear : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Read note");
             isInRange = true;
         }
     }
@@ -47,6 +49,7 @@ public class NoteAppear : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("");
             isInRange = false;
         }
     }
@@ -64,6 +67,8 @@ public class NoteAppear : MonoBehaviour
         miscEventsAudioSource.PlayOneShot(pageflip); //play the page flip sound
         isNoteVisible = !isNoteVisible;
         noteImage.enabled = isNoteVisible;
+        if (isNoteVisible)
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Close note");
         if (isNoteVisible && redRoomNote){
             ThoughtDialogueManager noteManager = FindFirstObjectByType<ThoughtDialogueManager>();
             noteManager.redRoomNote = true; //set the note to be visible
@@ -79,6 +84,9 @@ public class NoteAppear : MonoBehaviour
         
         
         NoteText.SetActive(isNoteVisible); 
+        if (!isNoteVisible){
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("");
+        }
 
         if (playerMovement != null)
         {

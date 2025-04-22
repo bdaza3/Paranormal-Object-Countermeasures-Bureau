@@ -8,11 +8,15 @@ public class ThoughtDialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
 
     public TextMeshProUGUI noteText;
+
+    public TextMeshProUGUI hoverText;
     public float displayTime = 3f;
 
     private Coroutine currentRoutine;
 
     private bool note = false; //visibility of the note
+
+    private bool interactionhover = false; //if the player is hovering over an object to interact with
 
     public bool redRoomNote = false; //if the note is a red room note
     public bool facultyNote = false; //if the note is a faculty note
@@ -26,11 +30,16 @@ public class ThoughtDialogueManager : MonoBehaviour
 
     public void ShowNote(string message, System.Action onComplete = null)
     {
-        note = true; //set the note to be visible
+        note = true; 
         if (currentRoutine != null)
             StopCoroutine(currentRoutine);
         currentRoutine = StartCoroutine(DisplayThought(message, onComplete));
-        note = false; //set the note to be invisible again so that dialogue can show
+        note = false; 
+    }
+
+    public void ShowHoverText(string message)//shows the hover text instantly
+    {
+        DisplayHoverText(message);
     }
 
     private IEnumerator DisplayThought(string message, System.Action onComplete) //shows thought 
@@ -81,5 +90,11 @@ public class ThoughtDialogueManager : MonoBehaviour
             yield return new WaitForSeconds(typingSpeed);
         }
     }
+    }
+
+    private void DisplayHoverText(string message) //shows hover text instantly
+    {
+        hoverText.text = message;
+        hoverText.alpha = 1;
     }
 }

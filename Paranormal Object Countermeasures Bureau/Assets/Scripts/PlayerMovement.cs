@@ -32,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     //SOUNDS
     public AudioSource WalkAudioSource;
     public AudioSource VentAudioSource;
+    public AudioSource BreathingAudioSource;
+
     [SerializeField] private AudioClip footstepSound;
     [SerializeField] private AudioClip runningSound;
     [SerializeField] private AudioClip ventSound;
@@ -130,9 +132,14 @@ public class PlayerMovement : MonoBehaviour
 
             if(currTime - startTime >= staminaInterval){
                 tired = true;
-                currentSpeed = walkSpeed;
+                currentSpeed = walkSpeed - 1;
                 currTime = 0;
                 startTime = 0;
+                if(BreathingAudioSource.isPlaying){
+                    BreathingAudioSource.UnPause();
+                }else{
+                    BreathingAudioSource.Play();
+                }
                 Debug.Log("cooldown started!");
             }
         }
@@ -160,6 +167,7 @@ public class PlayerMovement : MonoBehaviour
                 currTime += Time.deltaTime;
                 if (currTime - startTime >= cooldownInterval)
                 {
+                    BreathingAudioSource.Pause();
                     Debug.Log("cooldown ended!");
                     tired = false;
                     currTime = 0;

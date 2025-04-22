@@ -78,6 +78,7 @@ void Update()
     {
         if (other.CompareTag("Player"))
         {
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Open door");
             playerInRange = true;  
         }
     }
@@ -86,6 +87,7 @@ void Update()
     {
         if (other.CompareTag("Player"))
         {
+            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("");
             playerInRange = false;  
         }
     }
