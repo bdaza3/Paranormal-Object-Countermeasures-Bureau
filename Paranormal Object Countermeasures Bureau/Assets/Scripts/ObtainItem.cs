@@ -73,6 +73,14 @@ public class ObtainItem : MonoBehaviour
                     );     
                     MonsterHallway.SetActive(true); //spawn monster in hallway after key               
                 }
+                if (CompareTag("LighterItem")) 
+                {
+                    inventory.lighterObtained = true; 
+                    Debug.Log("Lighter picked up!");
+                    FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This lighter could come in handy in dark areas...",
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the lighter to start a fire.")
+                    );
+                }
 
                 gameObject.SetActive(false); 
             }

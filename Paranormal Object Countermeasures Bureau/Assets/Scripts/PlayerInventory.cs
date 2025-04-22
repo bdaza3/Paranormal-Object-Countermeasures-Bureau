@@ -14,10 +14,12 @@ public class PlayerInventory : MonoBehaviour
     public GameObject flashlight;
     public GameObject offhandLight;
     public GameObject axe;
+    public GameObject lighter;
 
     bool isSwinging = false;
     public GameObject drill;
     public Light flashlightLight;
+    public Light lighterLight;
 
     public Light dimVentLight;
 
@@ -62,9 +64,12 @@ public class PlayerInventory : MonoBehaviour
     public bool isAxeEquipped = false;
     public bool isDrillEquipped = false;
     public bool isFlashlightOn = false;
+    public bool isLighterOn = false;
+    public bool isLighterEquipped = false;
     public bool axeObtained = false;
     public bool drillObtained = false;
     public bool keyObtained = false;
+    public bool lighterObtained = false;
 
     [Header("Axe Settings")]
     public float axeSwingDistance = 2f; //How far the axe can hit
@@ -87,6 +92,7 @@ public class PlayerInventory : MonoBehaviour
         offhandLight.SetActive(false);
         axe.SetActive(false);
         drill.SetActive(false);
+        lighter.SetActive(false);
         flashlightLight.enabled = false; //flash light
         dimVentLight.enabled = false; //vent light
 
@@ -110,10 +116,19 @@ public class PlayerInventory : MonoBehaviour
         {
             EquipPowerDrill();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4) && lighterObtained)
+        {
+            EquipLighter();
+        }
 
         if (isFlashlightEquipped && Input.GetKeyDown(KeyCode.Mouse0))
         {
             ToggleFlashlightLight();
+        }
+
+        if (isLighterEquipped && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            ToggleLighterLight();
         }
 
         if (isAxeEquipped && Input.GetKeyDown(KeyCode.Mouse0) && !isSwinging)
@@ -130,6 +145,8 @@ public class PlayerInventory : MonoBehaviour
             flashlightLight.enabled = false; //turn off flashlight in vent
             offhandLight.SetActive(false); //turn off offhand light in vent
             isFlashlightOn = false;
+            isLighterOn = false; //turn off lighter in vent
+            lighterLight.enabled = isLighterOn;
             AmbientAudioSource.Stop(); //stop music in vent
         }
     }
@@ -139,11 +156,15 @@ public class PlayerInventory : MonoBehaviour
         isFlashlightEquipped = true;
         isAxeEquipped = false;
         isDrillEquipped = false;
+        isLighterEquipped = false;
+        isLighterOn = false; 
+        //lighterLight.enabled = isLighterOn;
 
         flashlight.SetActive(true);
         offhandLight.SetActive(false);
         axe.SetActive(false);
         drill.SetActive(false);
+        lighter.SetActive(false);
 
         flashlightLight.enabled = isFlashlightOn;
     }
@@ -153,11 +174,15 @@ public class PlayerInventory : MonoBehaviour
         isAxeEquipped = true;
         isFlashlightEquipped = false;
         isDrillEquipped = false;
+        isLighterEquipped = false;
+        isLighterOn = false; 
+        //lighterLight.enabled = isLighterOn;
 
         axe.SetActive(true);
         drill.SetActive(false);
         offhandLight.SetActive(isFlashlightOn);
         flashlight.SetActive(false);
+        lighter.SetActive(false);
     }
 
     private void EquipPowerDrill()
@@ -165,11 +190,43 @@ public class PlayerInventory : MonoBehaviour
         isDrillEquipped = true;
         isFlashlightEquipped = false;
         isAxeEquipped = false;
+        isLighterEquipped = false;
+        isLighterOn = false; 
+        //lighterLight.enabled = isLighterOn;
 
         drill.SetActive(true);
         axe.SetActive(false);
         offhandLight.SetActive(isFlashlightOn);
         flashlight.SetActive(false);
+        lighter.SetActive(false);
+    }
+
+    private void EquipLighter()
+    {
+        isLighterEquipped = true;
+        isFlashlightEquipped = false;
+        isAxeEquipped = false;
+        isDrillEquipped = false;
+
+        lighter.SetActive(true);
+        flashlight.SetActive(false);
+        offhandLight.SetActive(false);
+        axe.SetActive(false);
+        drill.SetActive(false);
+
+        isLighterOn = false; // Lighter starts off
+        lighterLight.enabled = isLighterOn; // Ensure the lighter light is off
+    }
+
+    private void ToggleLighterLight()
+    {
+        if (inVent || inRedRoom) return; // Don't toggle lighter in vent or red room
+
+        // Play lighter toggle sound 
+        ItemAudioSource.PlayOneShot(flashlightSound, 1.5f); // Reuse flashlight sound for now
+
+        isLighterOn = !isLighterOn;
+        lighterLight.enabled = isLighterOn; // Toggle the lighter light
     }
 
     private void ToggleFlashlightLight()

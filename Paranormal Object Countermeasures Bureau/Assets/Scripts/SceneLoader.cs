@@ -5,6 +5,7 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadGameScene()
     {
+        
         SceneManager.LoadScene("Copy3rd");
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Copy3rd"));
     }
@@ -14,9 +15,14 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("MenuScene");
     }
 
+    public void LoadCreditsScene()
+    {
+        SceneManager.LoadScene("credits");
+    }
+
     public static void LoadGameStatic()
     {
-        SceneManager.LoadScene("Copy3rd");
+        SceneManager.LoadScene("credits");
     }
 
     public static void LoadMenuStatic()

@@ -7,6 +7,7 @@ public class UIManagerScript : MonoBehaviour
     public Graphic drill;
     public Graphic flashlight;
     public Graphic axe;
+    public Graphic lighter;
     public GameObject player;
 
     private PlayerInventory inventory;
@@ -17,6 +18,7 @@ public class UIManagerScript : MonoBehaviour
         flashlight.enabled = true;
         axe.enabled = false;
         drill.enabled = false;
+        lighter.enabled = false;
 
         inventory = player.GetComponent<PlayerInventory>();
     }
@@ -29,6 +31,9 @@ public class UIManagerScript : MonoBehaviour
         }
         if(inventory.getObtained("drill")){
             drill.enabled = true;
+        }
+        if(inventory.getObtained("lighter")){
+            lighter.enabled = true;
         }
     }
 }

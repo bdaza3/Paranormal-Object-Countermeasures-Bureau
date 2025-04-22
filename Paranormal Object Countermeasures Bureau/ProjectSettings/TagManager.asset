@@ -16,6 +16,7 @@ TagManager:
   - RedRoom
   - ClassMonster
   - BellChime
+  - LighterItem
   layers:
   - Default
   - TransparentFX

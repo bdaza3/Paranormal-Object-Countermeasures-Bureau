@@ -975,6 +975,8 @@ MonoBehaviour:
   openRot: 90
   closeRot: 0
   speed: 9
+  isStuckLocked: 0
+  keyNeeded: 0
 --- !u!65 &67237982
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1034,6 +1036,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3f2d63aff96ec4a8f4630b5438bb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonsterHallway: {fileID: 0}
+  Monster1B: {fileID: 0}
 --- !u!1 &105196167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,6 +1837,8 @@ MonoBehaviour:
   openRot: 90
   closeRot: 0
   speed: 5
+  isStuckLocked: 0
+  keyNeeded: 0
 --- !u!54 &211031660
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2222,6 +2228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3f2d63aff96ec4a8f4630b5438bb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonsterHallway: {fileID: 0}
+  Monster1B: {fileID: 0}
 --- !u!1001 &295120479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3987,6 +3995,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d190fe7101f6ee24fa220c5079b17c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monster: {fileID: 0}
+  animator: {fileID: 0}
   currentState: 0
   patrolPoints:
   - {fileID: 420070643}
@@ -3994,7 +4004,9 @@ MonoBehaviour:
   - {fileID: 1823767219}
   investigateTime: 3
   chaseRange: 8
-  playerDetectionRange: 5
+  investigateTimer: 0
+  agent: {fileID: 0}
+  lastHeardSound: {x: 0, y: 0, z: 0}
 --- !u!54 &632770756
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4528,6 +4540,9 @@ MonoBehaviour:
   openPosition: 2
   closedPosition: 0
   speed: 2
+  player: {fileID: 0}
+  isStuckLocked: 0
+  keyNeeded: 0
 --- !u!65 &711246624
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5311,6 +5326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3f2d63aff96ec4a8f4630b5438bb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonsterHallway: {fileID: 0}
+  Monster1B: {fileID: 0}
 --- !u!65 &939520489
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5887,6 +5904,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb4403e815a27f40ad9c501584e4ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barrier: {fileID: 0}
+  board: {fileID: 0}
+  player: {fileID: 0}
 --- !u!65 &1048451769
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7294,6 +7314,8 @@ MonoBehaviour:
   openRot: 90
   closeRot: 0
   speed: 9
+  isStuckLocked: 0
+  keyNeeded: 0
 --- !u!65 &1271593311
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8869,6 +8891,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noteImage: {fileID: 897286282}
+  miscEventsAudioSource: {fileID: 0}
+  pageflip: {fileID: 0}
+  redRoomNote: 0
+  facultyNote: 0
+  note: {fileID: 0}
+  NoteText: {fileID: 0}
 --- !u!65 &1606782137
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9293,6 +9321,71 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1673847738}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1704919228
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 166414096671969400, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_Name
+      value: LighterFull
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.493
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649899408769436354, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823892759047549357, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0330fcc68f12a4545b9e68d7888ea229, type: 2}
+    - target: {fileID: 4339597140209626308, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0330fcc68f12a4545b9e68d7888ea229, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3e06db188686fd148a3bf9175339889b, type: 3}
 --- !u!1 &1726396708
 GameObject:
   m_ObjectHideFlags: 0
@@ -9884,6 +9977,8 @@ MonoBehaviour:
   drillTimePerBolt: 0.5
   drillPrefab: {fileID: 338315078166896269, guid: 24d89e7b5fdaaed4a8fbe637ebf5d974, type: 3}
   drillStartPoint: {fileID: 301859653}
+  drillSound: {fileID: 0}
+  ventDropSound: {fileID: 0}
 --- !u!65 &1768030850
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10362,6 +10457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb4403e815a27f40ad9c501584e4ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barrier: {fileID: 0}
+  board: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &1857924549
 GameObject:
   m_ObjectHideFlags: 0
@@ -10724,6 +10822,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noteImage: {fileID: 897286282}
+  miscEventsAudioSource: {fileID: 0}
+  pageflip: {fileID: 0}
+  redRoomNote: 0
+  facultyNote: 0
+  note: {fileID: 0}
+  NoteText: {fileID: 0}
 --- !u!1 &1907417125
 GameObject:
   m_ObjectHideFlags: 0
@@ -11697,6 +11801,8 @@ MonoBehaviour:
   openRot: 90
   closeRot: 0
   speed: 5
+  isStuckLocked: 0
+  keyNeeded: 0
 --- !u!65 &2095562930
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11955,6 +12061,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3f2d63aff96ec4a8f4630b5438bb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonsterHallway: {fileID: 0}
+  Monster1B: {fileID: 0}
 --- !u!65 &2120960472
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12694,10 +12802,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7e6fb106add2742a0c44c73e4ef74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  walkSpeed: 8
   runSpeed: 9
+  crouchSpeed: 2.5
   lookSpeedX: 3
   lookSpeedY: 3
+  standHeight: 2
+  crouchHeight: 1
+  crouchCameraHeight: 1
+  standCameraHeight: 1.8
+  crouchTransitionSpeed: 6
+  jumpForce: 1.5
+  gravity: -9.81
+  WalkAudioSource: {fileID: 0}
+  VentAudioSource: {fileID: 0}
+  BreathingAudioSource: {fileID: 0}
+  footstepSound: {fileID: 0}
+  runningSound: {fileID: 0}
+  ventSound: {fileID: 0}
+  staminaInterval: 3
+  cooldownInterval: 2
 --- !u!1 &4091313219380131740
 GameObject:
   m_ObjectHideFlags: 0
@@ -12723,7 +12847,7 @@ Transform:
   m_GameObject: {fileID: 5063749386306734458}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.78344166, y: 1.95, z: -10.6}
+  m_LocalPosition: {x: -0.78344166, y: 1.95, z: -10.98}
   m_LocalScale: {x: 1, y: 1.1092, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12903,6 +13027,7 @@ GameObject:
   - component: {fileID: 3462338483196107343}
   - component: {fileID: 6048742668832167100}
   - component: {fileID: 7454697388376435447}
+  - component: {fileID: 8528759894553534578}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -13058,7 +13183,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -13096,16 +13221,34 @@ MonoBehaviour:
   axe: {fileID: 1453281349}
   drill: {fileID: 301859652}
   flashlightLight: {fileID: 867320595}
+  dimVentLight: {fileID: 0}
+  ItemAudioSource: {fileID: 0}
+  flashlightSound: {fileID: 0}
+  axeSound: {fileID: 0}
+  drillSoundItem: {fileID: 0}
+  AmbientAudioSource: {fileID: 0}
+  ambientBGM: {fileID: 0}
+  redRoomBGM: {fileID: 0}
+  chaseBGM: {fileID: 0}
+  heartbeat: {fileID: 0}
+  MiscEventAudioSource: {fileID: 0}
+  BellChime: {fileID: 0}
+  VentScare: {fileID: 0}
+  VentScareObj: {fileID: 0}
+  BellChimeObj: {fileID: 0}
+  facultyNoteObj: {fileID: 0}
+  MonsterHallway: {fileID: 0}
+  Monster1B: {fileID: 0}
+  barriers: []
   isFlashlightEquipped: 0
   isAxeEquipped: 0
   isDrillEquipped: 0
   isFlashlightOn: 0
   axeObtained: 0
   drillObtained: 0
+  keyObtained: 0
   axeSwingDistance: 2
-  boardLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  inVent: 0
 --- !u!4 &7765160821859805518
 Transform:
   m_ObjectHideFlags: 0
@@ -13277,6 +13420,31 @@ CapsuleCollider:
   m_Height: 2.3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!143 &8528759894553534578
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5063749386306734458}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8573274631837007601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13386,6 +13554,9 @@ MonoBehaviour:
   openPosition: 2
   closedPosition: 0
   speed: 2
+  player: {fileID: 0}
+  isStuckLocked: 0
+  keyNeeded: 0
 --- !u!33 &8985659264093558424
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -13443,3 +13614,4 @@ SceneRoots:
   - {fileID: 337602581}
   - {fileID: 1768030851}
   - {fileID: 266148182}
+  - {fileID: 1704919228}

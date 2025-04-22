@@ -69,9 +69,10 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator LoadMenuAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay); // Wait for the specified delay
-        SceneManager.LoadScene("MenuScene"); // Load the menu scene
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.None; // Unlock the cursor
         Cursor.visible = true;
+        SceneManager.LoadScene("MenuScene"); // Load the menu scene
+        //SceneManager.UnloadSceneAsync("Copy3rd");
     }
 
     void OnTriggerEnter(Collider other)
