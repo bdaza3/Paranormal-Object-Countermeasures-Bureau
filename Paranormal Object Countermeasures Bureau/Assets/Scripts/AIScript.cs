@@ -1,24 +1,65 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class AIScript : MonoBehaviour
 {
-
     public GameObject monster; //reference to the monster which has the animator component
     public Animator animator; //reference to animator component in monster fbx
+
+    public bool isPlayerHiding = false; //check if the player is hiding in a locker
+
+    //SOUNDS
+
+    bool isBgmPlaying = false; //check if bgm is playing
+    public AudioSource MonsterWalkAudioSource; //reference to the audio source for chase bgm
+
+    public AudioSource MonsterMiscAudioSource;
+
+    public AudioSource AmbientAudioSource; //reference to the audio source for ambient sounds
+
+    private float footstepTimer = 0f;
+    public float footstepInterval = 1.5f; //how fast footsteps happen
+
+    [SerializeField] private AudioClip footstepSound; 
+
+    [SerializeField] private AudioClip stompSound; 
+
+    [SerializeField] private AudioClip attackSound; 
+
+    [SerializeField] private AudioClip spawnSound; 
+
+    [SerializeField] private AudioClip chaseBGM; 
 
     public enum State { Patrol, Investigate, Chase } //list of states
     public State currentState = State.Patrol; //start of patrolling
 
     public Transform[] patrolPoints;
-    public float investigateTime = 3f;
-    public float chaseRange = 15f; //once the player is within this range, the monster will chase
+    public float investigateTime = 7f; //how long the monster investigates the area
+    public float chaseRange = 20f; //once the player is within this range, the monster will chase
 
     private int patrolIndex = 0;
     public float investigateTimer = 0f;
     public NavMeshAgent agent;
     public Vector3 lastHeardSound;
     private Transform player;
+    public GameObject playerObject; //reference to the player object
+
+    IEnumerator PlayFirstHalf()
+    {
+        MonsterWalkAudioSource.time = 0f; // start at beginning
+        MonsterWalkAudioSource.Play();
+        yield return new WaitForSeconds(footstepSound.length / 2.5f); // wait half the clip
+        MonsterWalkAudioSource.Stop(); // stop playback
+    }
+
+    IEnumerator PlayFirstPart()
+    {
+        MonsterWalkAudioSource.time = 0f; // start at beginning
+        MonsterWalkAudioSource.Play();
+        yield return new WaitForSeconds(stompSound.length / 2f); // wait half the clip
+        MonsterWalkAudioSource.Stop(); // stop playback
+    }
 
     void Start()
     {
@@ -40,26 +81,76 @@ public class AIScript : MonoBehaviour
                 //Debug.Log("Patrolling..");
                 agent.speed = 3f; //normal speed
                 PatrolBehavior();
-                if (distanceToPlayer < chaseRange)
+
+                MonsterWalkAudioSource.clip = footstepSound;
+                footstepTimer += Time.deltaTime;
+                if (footstepTimer >= footstepInterval)
+                {
+                    MonsterWalkAudioSource.pitch = Random.Range(0.8f, 1.3f);
+                    StartCoroutine(PlayFirstHalf());
+                    footstepTimer = 0f;
+                }
+
+                if (distanceToPlayer < chaseRange && !isPlayerHiding)
+                {
                     currentState = State.Chase;
+                    footstepTimer = 0f;
+                }
                 break;
 
             case State.Investigate: //monster hears a sound
                 animator.SetTrigger("Walk"); //set the walk animation
                 //Debug.Log("Investigating..");
-                agent.speed = 5f; //speed walk to investigate
+                agent.speed = 6f; //speed walk to investigate
                 InvestigateBehavior();
-                if (distanceToPlayer < chaseRange)
-                    currentState = State.Chase;
-                break;
+
+                MonsterWalkAudioSource.clip = footstepSound;
+                footstepTimer += Time.deltaTime;
+                if (footstepTimer >= footstepInterval)
+                {
+                    MonsterWalkAudioSource.pitch = Random.Range(0.8f, 1.3f);
+                    StartCoroutine(PlayFirstHalf());
+                    footstepTimer = 0f;
+                }
+                    PlayerInventory playerInventory = playerObject.GetComponent<PlayerInventory>();
+                    if (distanceToPlayer < chaseRange && !isPlayerHiding || !playerInventory.inVent)
+                    {
+                        currentState = State.Chase;
+                        footstepTimer = 0f;
+                    }
+                    break;
 
             case State.Chase: //chase player
                 animator.SetTrigger("Chase"); //set the run animation
                 //Debug.Log("Chasing..");
-                agent.speed = 7f; //run speed
-                ChaseBehavior();
-                if (distanceToPlayer > chaseRange * 3f) //if the player is too far away
+                agent.speed = 6f; //run speed
+                if (!isPlayerHiding)
+                    ChaseBehavior();
+
+                if (!isBgmPlaying)
+                {
+                    AmbientAudioSource.Stop();
+                    AmbientAudioSource.clip = chaseBGM;
+                    AmbientAudioSource.volume = 1.2f;
+                    AmbientAudioSource.Play();
+                    isBgmPlaying = true;
+                }
+
+                MonsterWalkAudioSource.clip = stompSound;
+                footstepTimer += Time.deltaTime;
+                if (footstepTimer >= footstepInterval)
+                {
+                    MonsterWalkAudioSource.pitch = Random.Range(0.8f, 1.3f);
+                    StartCoroutine(PlayFirstPart());
+                    footstepTimer = 0f;
+                }
+                playerInventory = playerObject.GetComponent<PlayerInventory>();
+                if (distanceToPlayer > chaseRange * 2f || isPlayerHiding || playerInventory.inVent){ //if the player is too far away or hiding
+                    AmbientAudioSource.Stop();
+                    isBgmPlaying = false;
                     currentState = State.Patrol;
+                    footstepTimer = 0f;
+                }
                 break;
         }
     }
@@ -94,10 +185,14 @@ public class AIScript : MonoBehaviour
     void ChaseBehavior()//chase player
     {
         agent.SetDestination(player.position); //set the destination to the player's position
-        if (Vector3.Distance(transform.position, player.position) < 2f) //if the monster is close to the player
+        if (Vector3.Distance(transform.position, player.position) < 4f) //if the monster is close to the player
         {
             //animator.SetTrigger("Attack"); //attack animation
-            //Debug.Log("Attacking player..");
+            Debug.Log("Attacking player..");
+            MonsterMiscAudioSource.clip = attackSound;
+            MonsterMiscAudioSource.pitch = Random.Range(0.8f, 1.3f);
+            MonsterMiscAudioSource.volume = 0.3f;
+            MonsterMiscAudioSource.PlayOneShot(attackSound);
         }
     }
 

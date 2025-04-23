@@ -12,7 +12,7 @@ public class ObtainItem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            FindFirstObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Pick up item");
+            FindFirstObjectByType<ThoughtDialogueManager>().ShowHoverText("(E or Left Click) Pick up item");
             isInRange = true;
             player = other.gameObject;
         }
@@ -29,8 +29,9 @@ public class ObtainItem : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (isInRange && Input.GetKeyDown(KeyCode.E))
+    {   
+        //left click to pick up item or press e
+        if (isInRange && (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0)))
         {
             PickUpItem();
         }
@@ -50,17 +51,16 @@ public class ObtainItem : MonoBehaviour
                     Debug.Log("Drill picked up!");
                     FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This could be useful to open the vent cover in classroom 1-E",
                         () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("From there I can access classroom 1-C and get the key to the maintenance closet...",
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Drill open the vent cover to access classroom 1-C")
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Drill open the vent cover in classroom 1-E on the east side of the school.")
                     )
             );
-
                 }
                 if (CompareTag("KeyItem")) 
                 {
                     inventory.keyObtained = true; 
                     Debug.Log("Key picked up!");
                     FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I should be able to use this to open the locked door...", 
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Open the door to the maintenance closet")
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Unlock the maintenance closet to the right of the bathrooms in the main hallway ")
                     );
                     Monster1B.SetActive(true); //spawn monster after vent
                 }
@@ -69,7 +69,7 @@ public class ObtainItem : MonoBehaviour
                     inventory.axeObtained = true; 
                     Debug.Log("Axe picked up!");
                     FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This'll be useful to break down the boards blocking the stairwell...", 
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Break down the boards to access the second floor.")
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Break down the wooden boards near the lockers to access the second floor.")
                     );     
                     MonsterHallway.SetActive(true); //spawn monster in hallway after key               
                 }
@@ -79,6 +79,22 @@ public class ObtainItem : MonoBehaviour
                     Debug.Log("Lighter picked up!");
                     FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This lighter could come in handy in dark areas...",
                         () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the lighter to start a fire.")
+                    );
+                }
+                if (CompareTag("FuelCan")) 
+                {
+                    inventory.fuelcanObtained = true; 
+                    Debug.Log("Fuel can picked up!");
+                    FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I should be able to use this to start a fire...",
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the fuel can to start a fire and escape.")
+                    );
+                }
+                if (CompareTag("cloth"))
+                {
+                    inventory.clothObtained = true; 
+                    Debug.Log("Cloth picked up!");
+                    FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I should be able to use this to start a fire...",
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the cloth to start a fire and escape.")
                     );
                 }
 

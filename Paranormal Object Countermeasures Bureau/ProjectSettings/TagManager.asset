@@ -17,6 +17,10 @@ TagManager:
   - ClassMonster
   - BellChime
   - LighterItem
+  - Locker
+  - Stairs
+  - FuelCan
+  - cloth
   layers:
   - Default
   - TransparentFX

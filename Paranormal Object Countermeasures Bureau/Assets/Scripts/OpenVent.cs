@@ -11,6 +11,8 @@ public class OpenVent : MonoBehaviour
 
     public Transform drillStartPoint;            
     private GameObject player;
+
+    public GameObject screwcollider; //one of the screws will have a collider which will be destroyed
     private bool isInRange = false;
     private bool isDrilling = false;
     private bool ventOpened = false;
@@ -34,6 +36,7 @@ public class OpenVent : MonoBehaviour
             if (inventory != null && inventory.drillObtained && inventory.isDrillEquipped)
             {
                 Debug.Log("Starting drill process...");
+                SoundManager.MakeSound(transform.position, 50f); //play sound when using drill
                 StartCoroutine(DrillBolts(inventory.drill));
             }
             else
@@ -102,6 +105,7 @@ public class OpenVent : MonoBehaviour
             rb.useGravity = true;
 
             ventOpened = true;
+            Destroy(screwcollider); //destroy the collider of the screw
 
             Debug.Log("Vent cover detached!");
             FindFirstObjectByType<ThoughtDialogueManager>().ShowThought(" ", 

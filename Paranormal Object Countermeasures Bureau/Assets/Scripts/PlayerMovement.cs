@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift)) //if shift is pressed
         {
             currentMoveSpeed = runSpeed; //run speed
-            SoundManager.MakeSound(transform.position, 15f); //running sound trigger
+            SoundManager.MakeSound(transform.position, 20f); //running sound trigger
         }
         else
         {
@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
                 currTime += Time.deltaTime;
                 currentSpeed = runSpeed;
                 if (WalkAudioSource.resource != runningSound) { WalkAudioSource.resource = runningSound; }
-                if (isMoving) SoundManager.MakeSound(transform.position, 15f);
+                if (isMoving) SoundManager.MakeSound(transform.position, 30f);
 
             if(currTime - startTime >= staminaInterval){
                 tired = true;
@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
         else if (isCrouching) //crouching
         {
             currentSpeed = crouchSpeed;
-            if (isMoving) SoundManager.MakeSound(transform.position, 2f);
+            if (isMoving) SoundManager.MakeSound(transform.position, 5f);
             PlayerInventory playerInventory = GetComponent<PlayerInventory>();
             if (playerInventory.inVent){
                 WalkAudioSource.volume = 0.7f; //lower volume of footsteps in vent
@@ -162,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentSpeed = walkSpeed;
             if (WalkAudioSource.resource != footstepSound) { WalkAudioSource.resource = footstepSound; }
-            if (isMoving) SoundManager.MakeSound(transform.position, 8f);
+            if (isMoving) SoundManager.MakeSound(transform.position, 10f);
             if(tired){
                 currTime += Time.deltaTime;
                 if (currTime - startTime >= cooldownInterval)

@@ -27,6 +27,6 @@ public class SceneLoader : MonoBehaviour
 
     public static void LoadMenuStatic()
     {
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("2ndFloor");
     }
 }

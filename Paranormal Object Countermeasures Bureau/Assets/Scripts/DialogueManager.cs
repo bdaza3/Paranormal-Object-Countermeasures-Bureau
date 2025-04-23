@@ -20,6 +20,8 @@ public class ThoughtDialogueManager : MonoBehaviour
 
     public bool redRoomNote = false; //if the note is a red room note
     public bool facultyNote = false; //if the note is a faculty note
+
+    public bool artNote = false; //if the note is an art note
     
     public void ShowThought(string message, System.Action onComplete = null)
     {
@@ -83,6 +85,10 @@ public class ThoughtDialogueManager : MonoBehaviour
         else if (facultyNote){//FACULTY
             noteText.fontSize = 22;
             typingSpeed = 0.03f;
+        }
+        else if (artNote){//ART
+            noteText.fontSize = 50;
+            typingSpeed = 0.05f;
         }
         foreach (char letter in message.ToCharArray())
         {

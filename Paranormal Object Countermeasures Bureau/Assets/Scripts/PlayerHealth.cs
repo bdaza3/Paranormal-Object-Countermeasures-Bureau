@@ -78,8 +78,12 @@ public class PlayerHealth : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("BigMonster")){
-            inDistance = true;
-            damageMultiplier = bigM;
+            AIScript monsterAI = FindFirstObjectByType<AIScript>();
+            if (!monsterAI.isPlayerHiding){//do not damage if the player is hiding
+                Debug.Log("Player aint hiding");
+                inDistance = true;
+                damageMultiplier = bigM;
+            }
         }
         if (other.gameObject.CompareTag("ClassMonster"))
         {

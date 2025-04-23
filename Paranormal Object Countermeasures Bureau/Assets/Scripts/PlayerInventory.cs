@@ -5,16 +5,22 @@ using JetBrains.Annotations;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using System;
+using UnityEngine.SceneManagement;
 
 
 
 public class PlayerInventory : MonoBehaviour
 {
+
+    public bool secondFloor; //true if the player is on the second floor, false if on the first floor
+
     [Header("Inventory Items")]
     public GameObject flashlight;
     public GameObject offhandLight;
     public GameObject axe;
     public GameObject lighter;
+    public GameObject fuelCanister;
+    public GameObject cloth; 
 
     bool isSwinging = false;
     public GameObject drill;
@@ -52,8 +58,12 @@ public class PlayerInventory : MonoBehaviour
 
     public GameObject facultyNoteObj;
 
+    public GameObject artNoteObj;//SECOND FLOOR NOTE
+
     public GameObject MonsterHallway; //spawnable monster in hallway after key
     public GameObject Monster1B; //spawnable monster after vent
+
+    public GameObject MainMonster; //main monster object
 
     //array of barrier objects
     public GameObject[] barriers;
@@ -66,10 +76,14 @@ public class PlayerInventory : MonoBehaviour
     public bool isFlashlightOn = false;
     public bool isLighterOn = false;
     public bool isLighterEquipped = false;
+    public bool isFuelCanisterEquipped = false;
+    public bool isClothEquipped = false; 
     public bool axeObtained = false;
     public bool drillObtained = false;
     public bool keyObtained = false;
     public bool lighterObtained = false;
+    public bool fuelcanObtained = false;
+    public bool clothObtained = false; 
 
     [Header("Axe Settings")]
     public float axeSwingDistance = 2f; //How far the axe can hit
@@ -83,18 +97,31 @@ public class PlayerInventory : MonoBehaviour
     private void Start() //UPON START
     {
         //show initial objective and dialogue
+        if (!secondFloor){
         FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I've got to find the missing student here...",
             () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("First I should head to the faculty office for any clues.",
                 () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Head to the faculty office")
             )
         );
+        }
+        if (secondFloor){
+        FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("The missing student must be up here somewhere...",
+            () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("Maybe they had some connection to the past events here?",
+                () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I'll go and check out the art room up ahead.",
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Head to the art room at the end of the hall")
+            )
+        ));
+        }
         flashlight.SetActive(false);
         offhandLight.SetActive(false);
         axe.SetActive(false);
         drill.SetActive(false);
         lighter.SetActive(false);
+        fuelCanister.SetActive(false); 
+        cloth.SetActive(false); 
         flashlightLight.enabled = false; //flash light
         dimVentLight.enabled = false; //vent light
+        
 
         //play ambient bgm
         AmbientAudioSource.clip = ambientBGM;
@@ -119,6 +146,14 @@ public class PlayerInventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4) && lighterObtained)
         {
             EquipLighter();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5) && fuelcanObtained)
+        {
+            EquipFuelCanister();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6) && clothObtained)
+        {
+            EquipCloth();
         }
 
         if (isFlashlightEquipped && Input.GetKeyDown(KeyCode.Mouse0))
@@ -159,12 +194,16 @@ public class PlayerInventory : MonoBehaviour
         isLighterEquipped = false;
         isLighterOn = false; 
         //lighterLight.enabled = isLighterOn;
-
+        isFuelCanisterEquipped = false; //turn off fuel canister
+        isClothEquipped = false;
+        
+        cloth.SetActive(false); 
         flashlight.SetActive(true);
         offhandLight.SetActive(false);
         axe.SetActive(false);
         drill.SetActive(false);
         lighter.SetActive(false);
+        fuelCanister.SetActive(false);
 
         flashlightLight.enabled = isFlashlightOn;
     }
@@ -177,12 +216,16 @@ public class PlayerInventory : MonoBehaviour
         isLighterEquipped = false;
         isLighterOn = false; 
         //lighterLight.enabled = isLighterOn;
-
+        isFuelCanisterEquipped = false;
+        isClothEquipped = false;
+        
+        cloth.SetActive(false); 
         axe.SetActive(true);
         drill.SetActive(false);
         offhandLight.SetActive(isFlashlightOn);
         flashlight.SetActive(false);
         lighter.SetActive(false);
+        fuelCanister.SetActive(false);
     }
 
     private void EquipPowerDrill()
@@ -193,12 +236,16 @@ public class PlayerInventory : MonoBehaviour
         isLighterEquipped = false;
         isLighterOn = false; 
         //lighterLight.enabled = isLighterOn;
-
+        isFuelCanisterEquipped = false;
+        isClothEquipped = false;
+        
+        cloth.SetActive(false); 
         drill.SetActive(true);
         axe.SetActive(false);
         offhandLight.SetActive(isFlashlightOn);
         flashlight.SetActive(false);
         lighter.SetActive(false);
+        fuelCanister.SetActive(false);
     }
 
     private void EquipLighter()
@@ -207,15 +254,55 @@ public class PlayerInventory : MonoBehaviour
         isFlashlightEquipped = false;
         isAxeEquipped = false;
         isDrillEquipped = false;
-
+        isFuelCanisterEquipped = false;
+        isClothEquipped = false;
+        
+        cloth.SetActive(false); 
         lighter.SetActive(true);
         flashlight.SetActive(false);
         offhandLight.SetActive(false);
         axe.SetActive(false);
         drill.SetActive(false);
+        fuelCanister.SetActive(false);
 
         isLighterOn = false; // Lighter starts off
         lighterLight.enabled = isLighterOn; // Ensure the lighter light is off
+    }
+
+    private void EquipFuelCanister()
+    {
+        isFuelCanisterEquipped = true;
+        isFlashlightEquipped = false;
+        isAxeEquipped = false;
+        isDrillEquipped = false;
+        isLighterEquipped = false;
+        isClothEquipped = false;
+
+        cloth.SetActive(false); 
+        fuelCanister.SetActive(true);
+        flashlight.SetActive(false);
+        offhandLight.SetActive(false);
+        axe.SetActive(false);
+        drill.SetActive(false);
+        lighter.SetActive(false);
+    }
+
+    private void EquipCloth()
+    {
+        isClothEquipped = true;
+        isFlashlightEquipped = false;
+        isAxeEquipped = false;
+        isDrillEquipped = false;
+        isLighterEquipped = false;
+        isFuelCanisterEquipped = false;
+
+        cloth.SetActive(true);
+        flashlight.SetActive(false);
+        offhandLight.SetActive(false);
+        axe.SetActive(false);
+        drill.SetActive(false);
+        lighter.SetActive(false);
+        fuelCanister.SetActive(false);
     }
 
     private void ToggleLighterLight()
@@ -247,6 +334,7 @@ public class PlayerInventory : MonoBehaviour
         if (!canPlayDrillSound) return; //exit if the cooldown is active
 
         ItemAudioSource.PlayOneShot(drillSoundItem, 1.5f);
+        SoundManager.MakeSound(transform.position, 40f); //play sound when using drill
 
         //disable further sound playing and start cooldown
         canPlayDrillSound = false;
@@ -260,7 +348,8 @@ public class PlayerInventory : MonoBehaviour
 
     private void SwingAxe()
     {
-        StartCoroutine(AxeSwingAnimation());        
+        StartCoroutine(AxeSwingAnimation());  
+        SoundManager.MakeSound(transform.position, 20f); //play sound when swinging axe      
     }
 
     private IEnumerator AxeSwingAnimation()
@@ -300,8 +389,9 @@ public class PlayerInventory : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {   
         //play bell sound when entering bell trigger and note is not active
-        if (other.CompareTag("BellChime") && facultyNoteObj.activeSelf == false)
+        if (other.CompareTag("BellChime"))
         {
+            if (!secondFloor && facultyNoteObj.activeSelf == false){//if on first floor
             Debug.Log("Bell sound played");
             MiscEventAudioSource.clip = BellChime;
             MiscEventAudioSource.PlayOneShot(BellChime);
@@ -313,9 +403,27 @@ public class PlayerInventory : MonoBehaviour
             }
             FindAnyObjectByType<ThoughtDialogueManager>().ShowThought("  The bell chime..? I should check it out...",
                 () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("Just have to watch out for Paranormal Objects...",
-                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Investigate the school.")
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Investigate the school for any tools or clues.")
                 )
             );
+            }
+            if (secondFloor && artNoteObj.activeSelf == false){ //if on second floor
+                Debug.Log("Bell sound played");
+                MiscEventAudioSource.clip = BellChime;
+                MiscEventAudioSource.PlayOneShot(BellChime);
+                BellChimeObj.SetActive(false); //turn off bell chime object
+                //remove all barriers
+                foreach (GameObject barrier in barriers)
+                {
+                    barrier.SetActive(false);
+                }
+                FindAnyObjectByType<ThoughtDialogueManager>().ShowThought("  That can't be good... If whatever this note is about is true...",
+                    () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I'm not alone up here.",
+                    () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Find the cloth, gasoline, and lighter to escape.")
+                    )
+                );
+                MainMonster.SetActive(true); //spawn main monster
+            }
         }
         if (other.CompareTag("VentEvent"))
         {
@@ -359,6 +467,17 @@ public class PlayerInventory : MonoBehaviour
             Debug.Log("Destroying board");
             Destroy(other.gameObject);
         }
+        if (other.CompareTag("Locker")){//hiding in locker so mame monster not chase player
+            AIScript monsterAI = FindFirstObjectByType<AIScript>();
+            if (monsterAI != null)
+            {
+                Debug.Log("Player is hiding in locker");
+                monsterAI.isPlayerHiding = true; // Set the monster's isPlayerHiding variable to true
+            }
+        }
+        if (other.CompareTag("Stairs")){//change levels
+            SceneManager.LoadScene("2ndFloor");
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -386,6 +505,15 @@ public class PlayerInventory : MonoBehaviour
             if (keyObtained) //on the way out after key
                 RenderSettings.fog = true;
         }
+        if (other.CompareTag("Locker")) //stop hiding in locker
+        {
+            AIScript monsterAI = FindFirstObjectByType<AIScript>();
+            if (monsterAI != null)
+            {
+                Debug.Log("Player is no longer hiding in locker");
+                monsterAI.isPlayerHiding = false; // Set the monster's isPlayerHiding variable to false
+            }
+        }
     }
 
     public bool getObtained(string item){
@@ -394,6 +522,15 @@ public class PlayerInventory : MonoBehaviour
         }
         if(item == "drill"){
             return drillObtained;
+        }
+        if(item == "lighter"){
+            return lighterObtained;
+        }
+        if(item == "fuelcan"){
+            return fuelcanObtained;
+        }
+        if(item == "cloth"){
+            return clothObtained;
         }
         return false;
     }
@@ -410,6 +547,16 @@ public class PlayerInventory : MonoBehaviour
         if (item == "flashlight"){
             return isFlashlightEquipped;
         }
+        if (item == "lighter"){
+            return isLighterEquipped;
+        }
+        if (item == "fuelcan"){
+            return isFuelCanisterEquipped;
+        }
+        if (item == "cloth"){
+            return isClothEquipped;
+        }
+
         return false;
     }
 }

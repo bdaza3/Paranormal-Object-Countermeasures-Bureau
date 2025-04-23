@@ -15,7 +15,11 @@ public class NoteAppear : MonoBehaviour
 
     public bool redRoomNote = false; 
 
-    public bool facultyNote = false; 
+    public bool facultyHintNote = false; 
+
+    public bool classLoreNote = false;
+
+    public bool artNote = false;
 
     private PlayerMovement playerMovement; 
     private Rigidbody playerRigidbody;
@@ -75,11 +79,23 @@ public class NoteAppear : MonoBehaviour
             noteManager.ShowNote("I didn't even notice. It all happened so fast. When I came to, after the loud impact, the whole classroom was screaming. The windows were stained red, and I saw both of them. I never thought Matsuzaka would really do it. But the other girl... I couldn't even recognise her face.");
             noteManager.redRoomNote = false; //set the note to be invisible again so that dialogue can show
         }
-        if (isNoteVisible && facultyNote){
+        if (isNoteVisible && facultyHintNote){
             ThoughtDialogueManager noteManager = FindFirstObjectByType<ThoughtDialogueManager>();
             noteManager.facultyNote = true; //set the note to be visible
             noteManager.ShowNote("At approximately 1:47pm on October 2nd, two students, [REDACTED] and [REDACTED], were found deceased in front of classroom 1-C on the west side of the school. Emergency services were immediately notified and the scene was sealed off per established procedures. Upon arrival, paramedics found both students unresponsive and determined the cause of death to be [REDACTED]. The school has launched an internal investigation into this matter, including interviewing faculty and staff and providing counselling. Given the serious nature of this incident and the declining student population, it has been decided that the school will be closed and suspended as of November 20th. We ask all faculty and staff to pay close attention to the mental health of students and to report any abnormal behavior to the administration immediately.");
             noteManager.facultyNote = false;
+        }
+        if (isNoteVisible && classLoreNote){
+            ThoughtDialogueManager noteManager = FindFirstObjectByType<ThoughtDialogueManager>();
+            noteManager.artNote = true; //set the note to be visible
+            noteManager.ShowNote("DON'T LOOK AWAY. THEY'RE ALWAYS WATCHING YOU.");
+            noteManager.artNote = false;
+        }
+        if (isNoteVisible && artNote){
+            ThoughtDialogueManager noteManager = FindFirstObjectByType<ThoughtDialogueManager>();
+            noteManager.artNote = true; //set the note to be visible
+            noteManager.ShowNote("DON'T MAKE ANY LOUD NOISES, OR IT'LL FIND YOU. HIDE IN LOCKERS.");
+            noteManager.artNote = false;
         }
         
         
@@ -101,7 +117,11 @@ public class NoteAppear : MonoBehaviour
         Cursor.lockState = isNoteVisible ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = isNoteVisible;
 
-        if (!isNoteVisible && facultyNote){//if player is exiting faculty note, remove it and trigger bell
+        //stuff is mixed matched between class and faculty notes but for now it works
+        if (!isNoteVisible && classLoreNote){//if player is exiting faculty note, remove it and trigger bell
+            note.SetActive(false);
+        }
+        if (!isNoteVisible && artNote){//if player is exiting art room note, remove it and trigger bell
             note.SetActive(false);
         }
     }

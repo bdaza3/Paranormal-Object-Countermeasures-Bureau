@@ -687,7 +687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: 0}
+  m_AnchoredPosition: {x: -150, y: 55}
   m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2039785734
@@ -717,7 +717,11 @@ MonoBehaviour:
 
     Elson Allmuca
 
-    Nathaniel Herrera'
+    Nathaniel Herrera
+
+
+    Done
+    as a project at UIC as part of CS426 Videogame Design'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -830,7 +834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 0}
+  m_AnchoredPosition: {x: -200, y: 101}
   m_SizeDelta: {x: 400, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2068929103
@@ -853,17 +857,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'References:
-
-
-    asfndsvlkdsnvds
-
-
-    dnaslkfndfkv
-
-    dljandslnvdsln
-
-    dsklfndslkfndslknesdlfneslf'
+  m_text: "References:\n\n- Sounds were downloaded from Pixabay for free. \r\n- Vent
+    sounds from FNAF 3 and FNAF Help Wanted. \n\r- Ambient BGM from Free Youtube
+    Video: https://www.youtube.com/watch?v=xAO3x-Uhfoo\n- Red Room BGM from Higurashi
+    no Naku Koro Ni S1 OST: \u201CHaunting\u201D\n- Main Monster chase music from
+    Dead By Daylight The Unknown Chase Music [Live] \n- Main Monster sound effects
+    from Project: Playtime\n- 3D Models and Assets downloaded from Unity Asset Store
+    & Sketchfab\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

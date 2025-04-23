@@ -8,6 +8,8 @@ public class UIManagerScript : MonoBehaviour
     public Graphic flashlight;
     public Graphic axe;
     public Graphic lighter;
+    public Graphic fuelCan;
+    public Graphic cloth;
     public GameObject player;
 
     private PlayerInventory inventory;
@@ -19,6 +21,8 @@ public class UIManagerScript : MonoBehaviour
         axe.enabled = false;
         drill.enabled = false;
         lighter.enabled = false;
+        fuelCan.enabled = false;
+        cloth.enabled = false;
 
         inventory = player.GetComponent<PlayerInventory>();
     }
@@ -26,6 +30,7 @@ public class UIManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        inventory = player.GetComponent<PlayerInventory>();
         if(inventory.getObtained("axe")){
             axe.enabled = true;
         }
@@ -34,6 +39,12 @@ public class UIManagerScript : MonoBehaviour
         }
         if(inventory.getObtained("lighter")){
             lighter.enabled = true;
+        }
+        if(inventory.getObtained("fuelcan")){
+            fuelCan.enabled = true;
+        }
+        if(inventory.getObtained("cloth")){
+            cloth.enabled = true;
         }
     }
 }
