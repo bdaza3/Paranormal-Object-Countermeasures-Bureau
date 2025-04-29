@@ -1,4 +1,7 @@
 using UnityEngine;
+using TMPro;
+using System.Collections;
+using JetBrains.Annotations;
 
 public class ObtainItem : MonoBehaviour
 {
@@ -7,6 +10,8 @@ public class ObtainItem : MonoBehaviour
 
     public GameObject MonsterHallway; //spawnable monster in hallway after key
     public GameObject Monster1B; //spawnable monster after vent
+
+    public bool pickedup = false; //if the item has been picked up
 
     private void OnTriggerEnter(Collider other)
     {
@@ -34,6 +39,12 @@ public class ObtainItem : MonoBehaviour
         if (isInRange && (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0)))
         {
             PickUpItem();
+        }
+
+        
+        // Start a coroutine to clear the hover text after 3 seconds
+        if (pickedup == true){
+            FindFirstObjectByType<ThoughtDialogueManager>().ShowHoverText("");
         }
     }
 
@@ -78,7 +89,7 @@ public class ObtainItem : MonoBehaviour
                     inventory.lighterObtained = true; 
                     Debug.Log("Lighter picked up!");
                     FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This lighter could come in handy in dark areas...",
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the lighter to start a fire.")
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the lighter to start a fire and escape.")
                     );
                 }
                 if (CompareTag("FuelCan")) 
@@ -98,6 +109,7 @@ public class ObtainItem : MonoBehaviour
                     );
                 }
 
+                pickedup = true;
                 gameObject.SetActive(false); 
             }
         }

@@ -114,6 +114,8 @@ public class PlayerInventory : MonoBehaviour
         }
         flashlight.SetActive(false);
         offhandLight.SetActive(false);
+        isFlashlightEquipped = true;
+        isFlashlightOn = true;
         axe.SetActive(false);
         drill.SetActive(false);
         lighter.SetActive(false);
@@ -121,7 +123,7 @@ public class PlayerInventory : MonoBehaviour
         cloth.SetActive(false); 
         flashlightLight.enabled = false; //flash light
         dimVentLight.enabled = false; //vent light
-        
+        EquipFlashlight1();
 
         //play ambient bgm
         AmbientAudioSource.clip = ambientBGM;
@@ -208,6 +210,29 @@ public class PlayerInventory : MonoBehaviour
         flashlightLight.enabled = isFlashlightOn;
     }
 
+     private void EquipFlashlight1()
+    {
+        isFlashlightEquipped = true;
+        isAxeEquipped = false;
+        isDrillEquipped = false;
+        isLighterEquipped = false;
+        isLighterOn = false; 
+        //lighterLight.enabled = isLighterOn;
+        isFuelCanisterEquipped = false; //turn off fuel canister
+        isClothEquipped = false;
+        isFlashlightOn = true;
+        
+        cloth.SetActive(false); 
+        flashlight.SetActive(true);
+        offhandLight.SetActive(false);
+        axe.SetActive(false);
+        drill.SetActive(false);
+        lighter.SetActive(false);
+        fuelCanister.SetActive(false);
+
+        flashlightLight.enabled = isFlashlightOn;
+    }
+
     private void EquipAxe()
     {
         isAxeEquipped = true;
@@ -222,7 +247,7 @@ public class PlayerInventory : MonoBehaviour
         cloth.SetActive(false); 
         axe.SetActive(true);
         drill.SetActive(false);
-        offhandLight.SetActive(isFlashlightOn);
+        offhandLight.SetActive(false);
         flashlight.SetActive(false);
         lighter.SetActive(false);
         fuelCanister.SetActive(false);
@@ -242,7 +267,7 @@ public class PlayerInventory : MonoBehaviour
         cloth.SetActive(false); 
         drill.SetActive(true);
         axe.SetActive(false);
-        offhandLight.SetActive(isFlashlightOn);
+        offhandLight.SetActive(false);
         flashlight.SetActive(false);
         lighter.SetActive(false);
         fuelCanister.SetActive(false);
