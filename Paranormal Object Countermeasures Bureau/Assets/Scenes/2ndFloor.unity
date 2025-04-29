@@ -29334,7 +29334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -110}
+  m_AnchoredPosition: {x: 0, y: -186}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &239990967
@@ -59731,6 +59731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterHallway: {fileID: 0}
   Monster1B: {fileID: 0}
+  pickedup: 0
 --- !u!65 &480731936
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -66695,6 +66696,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548063256}
   m_Mesh: {fileID: -860548269720721619, guid: 01949f7360470ee48bbfc5f63e1f1e0d, type: 3}
+--- !u!1 &548834653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 548834654}
+  - component: {fileID: 548834656}
+  - component: {fileID: 548834655}
+  m_Layer: 5
+  m_Name: stamina
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &548834654
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548834653}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1047601902}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -750, y: -447}
+  m_SizeDelta: {x: 350, y: 75}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &548834655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548834653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.18240464, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: afbbf76d0a54ae241acad50d4650bce1, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &548834656
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548834653}
+  m_CullTransparentMesh: 1
 --- !u!1 &549709368
 GameObject:
   m_ObjectHideFlags: 0
@@ -82338,6 +82414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterHallway: {fileID: 0}
   Monster1B: {fileID: 0}
+  pickedup: 0
 --- !u!65 &677302618
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115868,6 +115945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterHallway: {fileID: 0}
   Monster1B: {fileID: 0}
+  pickedup: 0
 --- !u!65 &970911863
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -117349,6 +117427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterHallway: {fileID: 0}
   Monster1B: {fileID: 0}
+  pickedup: 0
 --- !u!65 &982529624
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -124650,6 +124729,43 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047329522}
   m_Mesh: {fileID: 4344544342090773336, guid: 01949f7360470ee48bbfc5f63e1f1e0d, type: 3}
+--- !u!1 &1047601901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1047601902}
+  m_Layer: 5
+  m_Name: StaminaBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1047601902
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047601901}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1634949132}
+  - {fileID: 548834654}
+  m_Father: {fileID: 1398718861}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1048177660
 GameObject:
   m_ObjectHideFlags: 0
@@ -128031,6 +128147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterHallway: {fileID: 0}
   Monster1B: {fileID: 0}
+  pickedup: 0
 --- !u!65 &1078250815
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -165344,6 +165461,7 @@ RectTransform:
   - {fileID: 2015154026}
   - {fileID: 1149552121}
   - {fileID: 1264762546}
+  - {fileID: 1047601902}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -173511,6 +173629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterHallway: {fileID: 0}
   Monster1B: {fileID: 0}
+  pickedup: 0
 --- !u!65 &1485994529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -190040,6 +190159,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634793207}
   m_Mesh: {fileID: 4563225486091859444, guid: 01949f7360470ee48bbfc5f63e1f1e0d, type: 3}
+--- !u!1 &1634949131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1634949132}
+  - component: {fileID: 1634949134}
+  - component: {fileID: 1634949135}
+  m_Layer: 5
+  m_Name: background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1634949132
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634949131}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1047601902}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -750, y: -447}
+  m_SizeDelta: {x: 350, y: 75}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1634949134
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634949131}
+  m_CullTransparentMesh: 1
+--- !u!114 &1634949135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634949131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: afbbf76d0a54ae241acad50d4650bce1, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1635125881
 GameObject:
   m_ObjectHideFlags: 0
@@ -191064,7 +191258,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -198.7}
+  m_AnchoredPosition: {x: 0, y: -274.7}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1647923263
@@ -218847,6 +219041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterHallway: {fileID: 0}
   Monster1B: {fileID: 0}
+  pickedup: 0
 --- !u!65 &1883786437
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -227554,7 +227749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -271}
+  m_AnchoredPosition: {x: 0, y: -347}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1953017729
@@ -248797,6 +248992,14 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3586395654491352536, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
+      propertyPath: runCost
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3586395654491352536, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
+      propertyPath: stamina
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3586395654491352536, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
       propertyPath: runSpeed
       value: 12
       objectReference: {fileID: 0}
@@ -248807,6 +249010,18 @@ PrefabInstance:
     - target: {fileID: 3586395654491352536, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
       propertyPath: walkSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3586395654491352536, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
+      propertyPath: MaxStamina
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3586395654491352536, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
+      propertyPath: StaminaBar
+      value: 
+      objectReference: {fileID: 548834655}
+    - target: {fileID: 3586395654491352536, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
+      propertyPath: chargeRate
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3586395654491352536, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
       propertyPath: standHeight

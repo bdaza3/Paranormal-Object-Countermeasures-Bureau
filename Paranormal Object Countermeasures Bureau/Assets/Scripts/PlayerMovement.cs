@@ -1,6 +1,9 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -48,9 +51,14 @@ public class PlayerMovement : MonoBehaviour
     private float startTime = 0;
     // private float cooldownTime = 0;
     // private float cooldownStart = 0;
+
+    [SerializeField]private Image StaminaBar;
     public float staminaInterval = 3f;
+    public float MaxStamina, stamina;
+    public float runCost, chargeRate;
     public float cooldownInterval = 2f;
     private bool tired = false;
+    private Coroutine recharge;
 
     private void Start()
     {
@@ -129,6 +137,9 @@ public class PlayerMovement : MonoBehaviour
                 currentSpeed = runSpeed;
                 if (WalkAudioSource.resource != runningSound) { WalkAudioSource.resource = runningSound; }
                 if (isMoving) SoundManager.MakeSound(transform.position, 30f);
+                stamina -= runCost * Time.deltaTime; //decrease stamina
+                stamina = Mathf.Clamp(stamina, 0, MaxStamina); //clamp stamina to 0 and max stamina
+                StaminaBar.fillAmount = stamina / MaxStamina; //update stamina bar
 
             if(currTime - startTime >= staminaInterval){
                 tired = true;
@@ -141,6 +152,8 @@ public class PlayerMovement : MonoBehaviour
                     BreathingAudioSource.Play();
                 }
                 Debug.Log("cooldown started!");
+                if (recharge != null) StopCoroutine(recharge); //stop the coroutine if it is already running
+                recharge = StartCoroutine(RechargeStamina()); //start the coroutine to recharge stamina
             }
         }
         else if (isCrouching) //crouching
@@ -183,6 +196,17 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
         move.Normalize(); //normalize the movement vector to prevent faster diagonal movement
         characterController.Move(move * currentSpeed * Time.deltaTime);
+    }
+
+    private IEnumerator RechargeStamina(){
+        while(stamina < MaxStamina){
+            stamina += chargeRate / 10f;
+            if(stamina > MaxStamina){
+                stamina = MaxStamina;
+            }
+            StaminaBar.fillAmount = stamina / MaxStamina; //update stamina bar
+            yield return new WaitForSeconds(0.1f); //wait for 0.1 seconds before recharging again
+        }
     }
 
     private void HandleJump()
