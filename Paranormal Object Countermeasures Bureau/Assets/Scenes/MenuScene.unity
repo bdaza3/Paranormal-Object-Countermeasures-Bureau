@@ -8998,7 +8998,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -29671,6 +29671,7 @@ GameObject:
   - component: {fileID: 1030172838}
   - component: {fileID: 1030172837}
   - component: {fileID: 1030172836}
+  - component: {fileID: 1030172840}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -29767,6 +29768,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 1.59, y: 16.423, z: -7.22}
+--- !u!114 &1030172840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030172835}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fef4898948a30549902ec8f69417a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  continueButton: {fileID: 972524432}
 --- !u!1 &1044766606
 GameObject:
   m_ObjectHideFlags: 0

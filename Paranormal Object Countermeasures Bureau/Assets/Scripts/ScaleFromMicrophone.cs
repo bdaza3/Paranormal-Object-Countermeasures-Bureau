@@ -71,7 +71,7 @@ public class ScaleFromMicrophone : MonoBehaviour
         if (loudness > threshold && soundCooldownTimer <= 0f)
         {
             Debug.Log("Loud azz Sound ("+ soundRange + ") made at position: " + playerPosition.position);
-            SoundManager.MakeSound(playerPosition.position, soundRange);
+            SoundManager.MakeSound(playerPosition.position, soundRange * 1.2f);
             soundCooldownTimer = soundCooldown;
         }
 

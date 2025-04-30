@@ -64,7 +64,7 @@ public class ObtainItem : MonoBehaviour
                     Debug.Log("Drill picked up!");
                     FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This could be useful to open the vent cover in classroom 1-E",
                         () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("From there I can access classroom 1-C and get the key to the maintenance closet...",
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Drill open the vent cover in classroom 1-E on the east side of the school.")
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Drill open the vent cover in classroom 1-E back at the opposite side of the school.")
                     )
             );
                 }
@@ -82,7 +82,7 @@ public class ObtainItem : MonoBehaviour
                     inventory.axeObtained = true; 
                     Debug.Log("Axe picked up!");
                     FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This'll be useful to break down the boards blocking the stairwell...", 
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Break down the wooden boards near the lockers to access the second floor.")
+                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Break down the wooden boards near the entrance lockers to access the second floor.")
                     );     
                     MonsterHallway.SetActive(true); //spawn monster in hallway after key               
                 }
@@ -90,25 +90,40 @@ public class ObtainItem : MonoBehaviour
                 {
                     inventory.lighterObtained = true; 
                     Debug.Log("Lighter picked up!");
-                    FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This lighter could come in handy in dark areas...",
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the lighter to start a fire and escape.")
-                    );
+                    if (inventory.itemsObtained != 2)
+                        FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This lighter could come in handy in dark areas...");
+                    else{
+            FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I can combine these in the lab to set the Paranormal Object on fire!",
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Lure Object 676 into the lab to destroy it.")
+            );                    
+            }
+                inventory.itemsObtained += 1; //increment the number of items obtained
                 }
                 if (CompareTag("FuelCan")) 
                 {
                     inventory.fuelcanObtained = true; 
                     Debug.Log("Fuel can picked up!");
-                    FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I should be able to use this to start a fire...",
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the fuel can to start a fire and escape.")
-                    );
+                    if (inventory.itemsObtained != 2)
+                        FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I should be able to use this to fuel the fire...");
+                    else{
+            FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I can combine these in the lab to set the Paranormal Object on fire!",
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Lure Object 676 into the lab to destroy it.")
+            );                    
+            }
+                inventory.itemsObtained += 1; //increment the number of items obtained
                 }
                 if (CompareTag("cloth"))
                 {
                     inventory.clothObtained = true; 
                     Debug.Log("Cloth picked up!");
-                    FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I should be able to use this to start a fire...",
-                        () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Use the cloth to start a fire and escape.")
-                    );
+                    if (inventory.itemsObtained != 2)
+                        FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("This cloth can be used start the fire from a distance...");
+                    else{
+                                    FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I can combine these in the lab to set the Paranormal Object on fire!",
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Lure Object 676 into the lab to destroy it.")
+            );
+                    }
+                inventory.itemsObtained += 1; //increment the number of items obtained
                 }
 
                 pickedup = true;

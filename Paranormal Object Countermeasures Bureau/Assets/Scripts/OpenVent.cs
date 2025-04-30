@@ -17,6 +17,8 @@ public class OpenVent : MonoBehaviour
     private bool isDrilling = false;
     private bool ventOpened = false;
 
+    public bool SecondFloorVent = false; //check if this is the 2nd floor vent
+
     //SOUNDS
     [SerializeField] private AudioClip drillSound;
     private AudioSource audioSource;
@@ -108,9 +110,15 @@ public class OpenVent : MonoBehaviour
             Destroy(screwcollider); //destroy the collider of the screw
 
             Debug.Log("Vent cover detached!");
+            
+            if (!SecondFloorVent){
             FindFirstObjectByType<ThoughtDialogueManager>().ShowThought(" ", 
                 () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Find the key in classroom 1-C")
             );}
+            else
+            {//literally do nothing to objectives
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)

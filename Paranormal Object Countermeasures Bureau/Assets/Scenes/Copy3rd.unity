@@ -10354,6 +10354,7 @@ MonoBehaviour:
   facultyHintNote: 0
   classLoreNote: 0
   artNote: 0
+  flashLight: {fileID: 1194575812744552283}
   note: {fileID: 0}
   NoteText: {fileID: 557439251}
 --- !u!65 &95492850
@@ -17615,7 +17616,7 @@ MonoBehaviour:
   closeRot: 0
   speed: 9
   isStuckLocked: 0
-  doorCollider: {fileID: 0}
+  doorCollider: {fileID: 1363849220}
   keyNeeded: 0
 --- !u!65 &162270071
 BoxCollider:
@@ -19874,6 +19875,7 @@ MonoBehaviour:
   facultyHintNote: 0
   classLoreNote: 0
   artNote: 0
+  flashLight: {fileID: 0}
   note: {fileID: 0}
   NoteText: {fileID: 0}
 --- !u!65 &186033323
@@ -22067,7 +22069,7 @@ MonoBehaviour:
   closeRot: 0
   speed: 5
   isStuckLocked: 0
-  doorCollider: {fileID: 0}
+  doorCollider: {fileID: 1154793378}
   keyNeeded: 1
 --- !u!65 &203429108
 BoxCollider:
@@ -37772,8 +37774,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 14.332088, y: 6.0214505, z: 0.19399299}
-  m_Center: {x: 6.6660447, y: 0.09654899, z: -0.011839083}
+  m_Size: {x: 18.85986, y: 6.0214505, z: 0.19399299}
+  m_Center: {x: 4.4021583, y: 0.09654899, z: -0.01183908}
 --- !u!23 &369753830
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -54108,6 +54110,7 @@ MonoBehaviour:
   facultyHintNote: 1
   classLoreNote: 0
   artNote: 0
+  flashLight: {fileID: 1194575812744552283}
   note: {fileID: 540810615}
   NoteText: {fileID: 557439251}
 --- !u!65 &540810617
@@ -55448,7 +55451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3858327875293412764, guid: 6df5b6988afe449f5a3278ccd2df22db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -49.65
+      value: -38.5
       objectReference: {fileID: 0}
     - target: {fileID: 3858327875293412764, guid: 6df5b6988afe449f5a3278ccd2df22db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -55456,7 +55459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3858327875293412764, guid: 6df5b6988afe449f5a3278ccd2df22db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 506.76
+      value: 509.7
       objectReference: {fileID: 0}
     - target: {fileID: 3858327875293412764, guid: 6df5b6988afe449f5a3278ccd2df22db, type: 3}
       propertyPath: m_LocalRotation.w
@@ -70336,7 +70339,7 @@ MonoBehaviour:
   closeRot: 0
   speed: 9
   isStuckLocked: 0
-  doorCollider: {fileID: 0}
+  doorCollider: {fileID: 1149441129}
   keyNeeded: 0
 --- !u!65 &710775166
 BoxCollider:
@@ -111290,6 +111293,7 @@ MonoBehaviour:
   facultyHintNote: 0
   classLoreNote: 1
   artNote: 0
+  flashLight: {fileID: 1194575812744552283}
   note: {fileID: 1103698054}
   NoteText: {fileID: 557439251}
 --- !u!65 &1103698057
@@ -125334,7 +125338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1249828417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183758,6 +183762,7 @@ MonoBehaviour:
   drillPrefab: {fileID: 338315078166896269, guid: 24d89e7b5fdaaed4a8fbe637ebf5d974, type: 3}
   drillStartPoint: {fileID: 1105170944}
   screwcollider: {fileID: 0}
+  SecondFloorVent: 0
   drillSound: {fileID: 0}
   ventDropSound: {fileID: 0}
 --- !u!65 &1857963709
@@ -194108,6 +194113,7 @@ MonoBehaviour:
   facultyHintNote: 0
   classLoreNote: 0
   artNote: 0
+  flashLight: {fileID: 0}
   note: {fileID: 0}
   NoteText: {fileID: 0}
 --- !u!65 &1947172904
@@ -214449,6 +214455,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1903216278}
   m_SourcePrefab: {fileID: 100100000, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
+--- !u!1 &1194575812744552283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4146418651511512030, guid: 51d403e17121c27479fe60cbeea29027, type: 3}
+  m_PrefabInstance: {fileID: 1194575812744552282}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &1194596103502298128
 MeshFilter:
   m_ObjectHideFlags: 0

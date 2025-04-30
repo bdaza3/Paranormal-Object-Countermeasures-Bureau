@@ -94,6 +94,10 @@ public class PlayerInventory : MonoBehaviour
 
     private bool canPlayDrillSound = true; // Flag to control drill sound cooldown
 
+    public bool oneItemLeft = false; //if only one item is left to obtain
+
+    public int itemsObtained = 0; //number of items obtained
+
     public bool all3ItemsObtained = false; //if all 3 items are obtained
 
     public bool playerInLab = false; //if the player is in the lab
@@ -102,6 +106,7 @@ public class PlayerInventory : MonoBehaviour
     {
         //show initial objective and dialogue
         if (!secondFloor){
+        PlayerPrefs.SetInt("ReachedLevel2", 0); //set the key to 0
         FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I've got to find the missing student here...",
             () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("First I should head to the faculty office for any clues.",
                 () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Head to the faculty office")
@@ -109,10 +114,12 @@ public class PlayerInventory : MonoBehaviour
         );
         }
         if (secondFloor){
+        PlayerPrefs.SetInt("ReachedLevel2", 1);
+        PlayerPrefs.Save(); //optional?
         FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("The missing student must be up here somewhere...",
             () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("Maybe they had some connection to the past events here?",
                 () => FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I'll go and check out the art room up ahead.",
-                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Head to the art room at the end of the hall")
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Investigate the art room at the end of the hall")
             )
         ));
         }
@@ -192,9 +199,6 @@ public class PlayerInventory : MonoBehaviour
         }
         if (clothObtained && lighterObtained && fuelcanObtained){
             all3ItemsObtained = true;
-            FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I can combine these in the lab to set the Paranormal Object on fire!",
-                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Lure Object 676 into the lab to destroy it.")
-            );
         }
 
     }
@@ -476,6 +480,10 @@ public class PlayerInventory : MonoBehaviour
             offhandLight.SetActive(false); //turn off offhand light in vent
             isFlashlightOn = false;
             dimVentLight.enabled = true;
+            if (secondFloor){
+                AIScript monsterAI = FindFirstObjectByType<AIScript>();
+                monsterAI.isPlayerHiding = true; // Set the monster's isPlayerHiding variable to true
+            }
         }
         if (other.CompareTag("VentScare") && keyObtained)//play scare returning to vent after player has key
         {
@@ -535,6 +543,10 @@ public class PlayerInventory : MonoBehaviour
 
             if (keyObtained) //on the way out after key
                 RenderSettings.fog = true;
+            if (secondFloor){
+                AIScript monsterAI = FindFirstObjectByType<AIScript>();
+                monsterAI.isPlayerHiding = false;
+            }
         }
         if (other.CompareTag("RedRoom")){
             Debug.Log("Leaving red room");

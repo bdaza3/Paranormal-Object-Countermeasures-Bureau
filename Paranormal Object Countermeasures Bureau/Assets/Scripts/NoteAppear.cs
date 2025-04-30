@@ -24,6 +24,8 @@ public class NoteAppear : MonoBehaviour
     private PlayerMovement playerMovement; 
     private Rigidbody playerRigidbody;
 
+    public GameObject flashLight; //reference to the flashlight GameObject
+
     public GameObject note; //reference to the current note GameObject
 
     public GameObject NoteText; //reference to the GameObject that contains the note text
@@ -44,8 +46,16 @@ public class NoteAppear : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Read note");
             isInRange = true;
+            if (isNoteVisible)
+            {
+                FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Close note");
+            }
+            else
+            {
+                FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Read note");
+            }
+            Debug.Log("Player is in range of the note.");
         }
     }
 
@@ -55,6 +65,7 @@ public class NoteAppear : MonoBehaviour
         {
             FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("");
             isInRange = false;
+            Debug.Log("Player is out of range of the note.");
         }
     }
 
@@ -71,8 +82,10 @@ public class NoteAppear : MonoBehaviour
         miscEventsAudioSource.PlayOneShot(pageflip); //play the page flip sound
         isNoteVisible = !isNoteVisible;
         noteImage.enabled = isNoteVisible;
-        if (isNoteVisible)
+        if (isNoteVisible){
             FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("(E) Close note");
+            flashLight.SetActive(false); //turn off the flashlight when the note is open
+        }
         if (isNoteVisible && redRoomNote){
             ThoughtDialogueManager noteManager = FindFirstObjectByType<ThoughtDialogueManager>();
             noteManager.redRoomNote = true; //set the note to be visible
@@ -102,6 +115,7 @@ public class NoteAppear : MonoBehaviour
         NoteText.SetActive(isNoteVisible); 
         if (!isNoteVisible){
             FindAnyObjectByType<ThoughtDialogueManager>().ShowHoverText("");
+            flashLight.SetActive(true); //turn off the flashlight when the note is open
         }
 
         if (playerMovement != null)
