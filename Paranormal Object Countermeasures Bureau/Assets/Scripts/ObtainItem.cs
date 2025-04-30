@@ -6,6 +6,8 @@ using JetBrains.Annotations;
 public class ObtainItem : MonoBehaviour
 {
     private bool isInRange = false;
+
+    private bool took = false;
     private GameObject player;
 
     public GameObject MonsterHallway; //spawnable monster in hallway after key

@@ -31,7 +31,7 @@ public class AIScript : MonoBehaviour
 
     [SerializeField] private AudioClip chaseBGM; 
 
-    public enum State { Patrol, Investigate, Chase } //list of states
+    public enum State { Patrol, Investigate, Chase, Death } //list of states
     public State currentState = State.Patrol; //start of patrolling
 
     public Transform[] patrolPoints;
@@ -44,6 +44,10 @@ public class AIScript : MonoBehaviour
     public Vector3 lastHeardSound;
     private Transform player;
     public GameObject playerObject; //reference to the player object
+
+    public bool inLabKillable = false;
+
+    public bool death = false; //check if the monster is dead
 
     IEnumerator PlayFirstHalf()
     {
@@ -96,6 +100,11 @@ public class AIScript : MonoBehaviour
                     currentState = State.Chase;
                     footstepTimer = 0f;
                 }
+                if (death) //if the monster is dead
+                {
+                    currentState = State.Death; //go to death state
+                    footstepTimer = 0f;
+                }
                 break;
 
             case State.Investigate: //monster hears a sound
@@ -116,6 +125,11 @@ public class AIScript : MonoBehaviour
                     if (distanceToPlayer < chaseRange && !isPlayerHiding || !playerInventory.inVent)
                     {
                         currentState = State.Chase;
+                        footstepTimer = 0f;
+                    }
+                    if (death) //if the monster is dead
+                    {
+                        currentState = State.Death; //go to death state
                         footstepTimer = 0f;
                     }
                     break;
@@ -151,6 +165,19 @@ public class AIScript : MonoBehaviour
                     currentState = State.Patrol;
                     footstepTimer = 0f;
                 }
+                if (death) //if the monster is dead
+                {
+                    currentState = State.Death; //go to death state
+                    footstepTimer = 0f;
+                }
+                break;
+            case State.Death:
+                animator.SetTrigger("Death"); //set the death animation
+                Debug.Log("Monster is dead..");
+                MonsterMiscAudioSource.clip = spawnSound;
+                MonsterMiscAudioSource.pitch = 1f;
+                MonsterMiscAudioSource.volume = 4f;
+                MonsterMiscAudioSource.PlayOneShot(spawnSound);
                 break;
         }
     }
@@ -187,7 +214,7 @@ public class AIScript : MonoBehaviour
         agent.SetDestination(player.position); //set the destination to the player's position
         if (Vector3.Distance(transform.position, player.position) < 4f) //if the monster is close to the player
         {
-            //animator.SetTrigger("Attack"); //attack animation
+            animator.SetTrigger("Attack"); //attack animation
             Debug.Log("Attacking player..");
             MonsterMiscAudioSource.clip = attackSound;
             MonsterMiscAudioSource.pitch = Random.Range(0.8f, 1.3f);
@@ -202,6 +229,23 @@ public class AIScript : MonoBehaviour
 
         agent.SetDestination(patrolPoints[patrolIndex].position);
         patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Lab"))//if object enters the lab
+        {
+            inLabKillable = true; //set the monster to be killable
+            Debug.Log("Monster is killable in lab");
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Lab"))//if object exits the lab
+        {
+            inLabKillable = false; //set the monster to not be killable
+            Debug.Log("Monster is not killable in lab");
+        }
     }
 }
 

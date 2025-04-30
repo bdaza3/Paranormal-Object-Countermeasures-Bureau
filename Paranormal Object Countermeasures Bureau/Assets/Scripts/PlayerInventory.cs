@@ -94,6 +94,10 @@ public class PlayerInventory : MonoBehaviour
 
     private bool canPlayDrillSound = true; // Flag to control drill sound cooldown
 
+    public bool all3ItemsObtained = false; //if all 3 items are obtained
+
+    public bool playerInLab = false; //if the player is in the lab
+
     private void Start() //UPON START
     {
         //show initial objective and dialogue
@@ -186,6 +190,13 @@ public class PlayerInventory : MonoBehaviour
             lighterLight.enabled = isLighterOn;
             AmbientAudioSource.Stop(); //stop music in vent
         }
+        if (clothObtained && lighterObtained && fuelcanObtained){
+            all3ItemsObtained = true;
+            FindFirstObjectByType<ThoughtDialogueManager>().ShowThought("I can combine these in the lab to set the Paranormal Object on fire!",
+                () => FindFirstObjectByType<ObjectiveManager>().SetObjective("□ Lure Object 676 into the lab to destroy it.")
+            );
+        }
+
     }
 
     private void EquipFlashlight()
@@ -449,6 +460,10 @@ public class PlayerInventory : MonoBehaviour
                 );
                 MainMonster.SetActive(true); //spawn main monster
             }
+        }//end of bell sound
+        if (other.CompareTag("Lab")){
+            playerInLab = true;
+            Debug.Log("Entered lab");
         }
         if (other.CompareTag("VentEvent"))
         {
@@ -507,6 +522,10 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.CompareTag("Lab")){
+            playerInLab = false;
+            Debug.Log("Exited lab");
+        }
         if (other.CompareTag("VentEvent"))
         {
             inVent = false;

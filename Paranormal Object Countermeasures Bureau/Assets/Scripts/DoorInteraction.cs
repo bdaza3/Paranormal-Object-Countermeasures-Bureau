@@ -12,6 +12,9 @@ public class DoorInteraction : MonoBehaviour
 
     public bool isStuckLocked; 
 
+    //get box collider of door
+    public BoxCollider doorCollider;
+
     public bool keyNeeded; 
 
 private bool isRotating = false;
@@ -48,6 +51,7 @@ void Update()
 
     if (isRotating)
     {
+        doorCollider.enabled = false;
         Quaternion current = doorPivot.transform.localRotation;
         Quaternion target = Quaternion.Euler(0, targetRot, 0);
         doorPivot.transform.localRotation = Quaternion.Slerp(current, target, Time.deltaTime * speed);
@@ -56,6 +60,7 @@ void Update()
         {
             doorPivot.transform.localRotation = target;
             isRotating = false;
+            doorCollider.enabled = true; 
         }
     }
 }

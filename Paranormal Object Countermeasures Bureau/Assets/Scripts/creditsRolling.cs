@@ -70,6 +70,8 @@ public class creditsRolling : MonoBehaviour
         }
 
         currentRoutine = null; // Reset the coroutine reference when done
+        Cursor.lockState = CursorLockMode.None; // Unlock the cursor
+        Cursor.visible = true;
         SceneManager.LoadScene("MenuScene");
     }
 }
