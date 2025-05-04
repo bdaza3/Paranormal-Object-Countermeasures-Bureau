@@ -1,14 +1,18 @@
 # Paranormal-Object-Countermeasures-Bureau
-CS 426 Final Project Group Repo
+### A single-player analog horror game, catered to horror fans in Unity3D, the player will navigate through a series of increasingly terrifying floors of a level, each home to a unique monster. Each monster will have its own unique way of chasing and hunting the player such as using in-game audio or visuals, in which the player will have to utilize various items given and special interactions in the level to avoid getting killed.
 
-Members: Brian Daza, Elson Allmuca, Nathaniel Herrera
+[Download and play the game here!](https://drive.google.com/drive/folders/1_4Vz5_7_QKXv-hpco5pbPN6RLeJCmsjy)
 
 
-Design link: https://docs.google.com/document/d/1HnHVIB9CBDQn_2MwPsO4bbKE3oP4CLHLwdDn5xrWmCA/edit?tab=t.0
+Developers: Brian Daza, Elson Allmuca, Nathaniel Herrera
 
-Bug-Tracker: https://docs.google.com/spreadsheets/d/1LBEG_IuWSTg_gs8gK-iohbxKnS380YjNh3Py2fRASSY/edit?gid=0#gid=0
 
-Schedule: https://docs.google.com/spreadsheets/d/1tYCqloe3EZvLUk-BUUb0RlLkidDnNsIYlcjF3NUliA8/edit?gid=0#gid=0
+[Design Document](https://docs.google.com/document/d/1HnHVIB9CBDQn_2MwPsO4bbKE3oP4CLHLwdDn5xrWmCA/edit?tab=t.0)
 
-Powerpoint link: https://docs.google.com/presentation/d/1YDSltrb4KqMGizym2I0sW9LJbkVTPrx9dA5g_r_4Hp4/edit?usp=sharing
+[Bug-Tracker](https://docs.google.com/spreadsheets/d/1LBEG_IuWSTg_gs8gK-iohbxKnS380YjNh3Py2fRASSY/edit?gid=0#gid=0)
 
+[Schedule](https://docs.google.com/spreadsheets/d/1tYCqloe3EZvLUk-BUUb0RlLkidDnNsIYlcjF3NUliA8/edit?gid=0#gid=0)
+
+[Powerpoint](https://docs.google.com/presentation/d/1YDSltrb4KqMGizym2I0sW9LJbkVTPrx9dA5g_r_4Hp4/edit?usp=sharing)
+
+### Developed as a final project for CS 426 at UIC.
