@@ -3,6 +3,8 @@
 
 [Download and play the game here!](https://drive.google.com/drive/folders/1_4Vz5_7_QKXv-hpco5pbPN6RLeJCmsjy)
 
+[View the trailer video here!](https://drive.google.com/file/d/1uKQVYw2xPWqQ6DU-nZNCsmUK6mm5bPa5/view?usp=sharing)
+
 
 Developers: Brian Daza, Elson Allmuca, Nathaniel Herrera
 
